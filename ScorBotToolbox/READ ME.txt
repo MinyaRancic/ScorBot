@@ -1,0 +1,7 @@
+Installation instructions:
+(1) Unzip the ScorBotToolbox file
+(2) Open MATLAB as an administrator
+(3) Change your MATLAB Current Directory to the location where the contents of the ScorBotToolbox file were unzipped
+(4) Run "installScorBotToolbox"
+(5) Upon successful completion, test functionality using "SCRIPT_Basic_Test"
+(6) Move "ScorBotToolbox Example SCRIPTS" to a location of your choosing

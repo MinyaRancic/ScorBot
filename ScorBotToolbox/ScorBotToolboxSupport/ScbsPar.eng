@@ -1,0 +1,132 @@
+;File: SCBSPAR.ENG                      Date: 24-MAR-2002 
+
+;-------------------------------------------------------
+[AxisParam]
+AxisType = Axis type bitmap; bit mask: 0=rotational, 1=linear, 2=gripper, 4=unlimited axis
+
+ImpactDetect  =  Maximum position error for impact detection, in encoder counts
+
+ExactEpsilon =   ****** Unused *********
+
+EncLimit_1   = Lower limit of axis motion, in encoder counts
+EncLimit_2   = Upper limit of axis motion, in encoder counts
+
+MaxSpeed =  Maximum speed setting, in units of encoder counts/(second)
+
+MaxAccel = Maximum acceleration/deceleration allowed for each axis during movement; in units of encoder counts/(second)2
+
+Manual_1 = Speed setting for manual movement in one direction.
+Manual_2 = Speed setting for manual movement in opposite direction.
+
+NoEnc90 = Number of encoder counts for 90 degrees; when axis is linear, value is number of encoder counts for 90 mm
+HorizPos = Encoder count at horizontal reference position
+
+CountsPerRound        =  ****** Unused *********
+MaximumVoltage       =  ****** Unused *********
+AmbientTemperature  =  ****** Unused *********
+MaximumTemperature  =  ****** Unused *********
+RotorResistance          = ****** Unused *********
+BackEMFConstant         = ****** Unused *********
+ThermalTimeConstant     = ****** Unused *********
+ThermalImpedance         = ****** Unused *********
+
+PropGain     =  Proportional feedback constant
+DifferGain    =   Differential feedback constant
+IntegralGain =   Integral feedback constant
+FeedForward  = Velocity feed forward constant 
+
+VelocityLimit  = ****** Unused *********
+AccelLimit     = ****** Unused *********
+
+TorqueLimit    =  ****** Unused *********
+
+Bias     =  Zero offset bias 
+TorquePWM     = ****** Unused *********
+
+Type         = Homing Type 
+Velocity     = Homing Velocity  
+
+SwitchState  = ****** Unused *********
+SwitchMask   = ****** Unused *********
+
+ImpactCondEnc   = Maximum encoder counts for impact detection during homing
+ImpactCondTicks = Number of ticks (24 ms) for impact detection during homing
+
+MaxTime      =  Maximum time for homing, in milliseconds
+MaxDistance  =Maximum movement during homing, in encoder counts
+Offset       =     Offset after home switch found, in encoder counts
+
+;-------------------------------------------------------
+[RobotParam]
+BiasAxis_1 =  Global zero offset bias for axis 1
+BiasAxis_2 =  Global zero offset bias for axis 2
+BiasAxis_3 =  Global zero offset bias for axis 3
+BiasAxis_4 =  Global zero offset bias for axis 4
+BiasAxis_5 =  Global zero offset bias for axis 5
+BiasAxis_6 =  Global zero offset bias for axis 6
+BiasAxis_7 =  Global zero offset bias for axis 7
+BiasAxis_8 =  Global zero offset bias for axis 8
+
+BaseAngle1 = Lower limit of axis motion, in angles (degrees), from horizontal reference position for axis  1
+BaseAngle2 = Upper limit of axis motion, in angles (degrees), from horizontal reference position for axis  1
+ShoulderAngle1 = Lower limit of axis motion, in angles (degrees), from horizontal reference position for axis  2
+ShoulderAngle2 = Upper limit of axis motion, in angles (degrees), from horizontal reference position for axis  2
+ElbowAngle1 =     Lower limit of axis motion, in angles (degrees), from horizontal reference position for axis  3
+ElbowAngle2 =     Upper limit of axis motion, in angles (degrees), from horizontal reference position for axis  3
+PitchAngle1  =      Lower limit of axis motion, in angles (degrees), from horizontal reference position for axis  4
+PitchAngle2  =      Upper limit of axis motion, in angles (degrees), from horizontal reference position for axis 4
+RollAngle1   =       Lower limit of axis motion, in angles (degrees), from horizontal reference position for axis  5
+RollAngle2   =       Upper limit of axis motion, in angles (degrees), from horizontal reference position for axis 5
+RMin =                  Lower limit of working envelope radius, in meters
+RMax =                 Upper limit of working envelope radius, in meters
+ZMin =                  Lower limit of Z coordinate, in meters
+ZMax =                 Upper limit of Z coordinate, in meters
+Singularity  =         Minimum elbow angle, in degrees
+
+BaseHeight      =  Z coordinate of the rotation axis of arm link 2 when robot at home position, in meters
+Joint1Offset    =   X coordinate of the rotation axis of arm link 2 when the robot at home position, in meters
+ShoulderLength  =  Length of arm link 2 from the first articulated joint, in meters
+Joint2Offset    =   Y coordinate (offset from center along the Y-axis) of the TCP when robot at home position, in meters
+ElbowLength     =   Length of arm link 3 from the second articulated joint, in meters
+Joint3Offset    =    **** Unused ******
+GripperLength   =   Distance from pitch axis to tip of gripper, in meters
+GripperOffset   =    **** Unused ******
+
+HomingAxis_1  =  First robot axis for homing
+HomingAxis_2  = Second robot axis for homing
+HomingAxis_3  =  Third robot axis for homing
+HomingAxis_4  =  Fourth robot axis for homing
+HomingAxis_5  =  Fifth robot axis for homing
+HomingAxis_6  =  Sixth robot axis for homing
+HomingAxis_7  =  Last axis for homing; 0=end of homing routine
+
+RangeEnc =  Maximum gripper jaw opening, in encoder counts
+RangeMM = Maximum gripper jaw opening, in millimeters
+GraspKoef = Coefficient for calculating gripper jaw opening after gripper has closed on object
+
+Xplus    =   Speed setting for manual movement along X-axis in positive direction
+Xminus =   Speed setting for manual movement along X-axis in negative direction
+Yplus    =  Speed setting for manual movement along Y-axis in positive direction
+Yminus =  Speed setting for manual movement along Y-axis in negative direction
+Zplus    =  Speed setting for manual movement along Z-axis in positive direction
+Zminus =   Speed setting for manual movement along Z-axis in negative direction
+Pplus    =  Speed setting for manual movement of pitch in positive direction
+Pminus =   Speed setting for manual movement of pitch in negative direction
+Rplus    =  Speed setting for manual movement of roll in positive direction
+Rminus =  Speed setting for manual movement of roll in negative direction
+
+Gearing_1  =  Algorithm for converting the encoder counts on axis 2 (and axis 3) to the joint value (angles) of the rotation axis of arm link 3. Available values -1,0,1.
+Gearing_2  =   Algorithm for converting the encoder counts on the rotation axis of arm link 3 to the joint value (angle) of the wrist pitch. Available values -1,0,1.
+Gearing_3  =  Algorithm for converting the encoder counts on axis 4 (and axis 5) to the joint value (angles) of the wrist pitch. Available values -1,0,1.
+Gearing_3  =  Algorithm for converting the encoder counts on axis 4 (and axis 5) to the joint value (angles) of the wrist roll. Available values -1,0,1.
+Gearing_5  =   **** Unused ******
+
+AccelA = Percentage of motion time to be allocated for robot acceleration
+AccelAccelA  = Percentage of motion time to be allocated for change in robot acceleration
+AccelB = Percentage of motion time to be allocated for peripheral acceleration
+AccelAccelB = Percentage of motion time to be allocated for change in peripheral acceleration 
+
+TotalTimeA  =     **** Unused ******
+
+MaxLinearSpeed = Maximum linear speed, in meter/second
+MaxJointSpeed = Maximum rotation speed, in rad/second

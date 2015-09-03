@@ -1,0 +1,469 @@
+;File: SCBS1.ENG           12-JUN-2002
+
+[PERIPHERALS] 
+; See Pc_acc.XXX file
+NOC=Not Connected
+LSB100S=Slidebase 1.0m, Screw-drive  
+LSB150S=Slidebase 1.5m, Screw-drive
+LSB100B=Slidebase 1.0m, Belt-drive 
+LSB180B=Slidebase 1.8m, Belt-drive
+LT03=Linear Table 0.3m
+XYT03X=XY Table X axis
+XYT03Y=XY Table Y axis
+RT24=Rotary Table, 24V
+CONV24=Conveyor Belt (gray),  24V
+MK24_127=Motor Kit (127.7:1), 24V
+
+
+// Shimon
+[WorkspaceDialog]          
+Caption = Workspace
+Project = Project
+Commands = Commands
+Program = Program -\s
+Positions = Positions -\s
+Image     = 3D Image -\s
+Empty = Empty        // Shimon2
+
+// Shimon
+[OpenParameterSetDialog]
+Caption = Open Parameter Set
+Open =    &Open 
+
+// Shimon
+[LoadProjectDialog]
+Caption = Load Project
+Filter =  Project
+ProjectName = Project name:
+FilesType = Files of type
+LookIn    = Look in:
+Ok = &Ok
+Cancel = &Cancel
+Hardware = Hardware
+Robot = Robot: // IDC_STATIC_MYROBOT
+Axis7 = Axis 7: // IDC_STATIC_AXIS7
+Axis8 = Axis 8: // IDC_STATIC_AXIS8
+
+// Shimon2
+[SaveProjectDialog]
+Caption = Save Project
+Filter =  Project
+
+// Shimon1
+[ChartsLegendDialog]
+Caption = Legend
+Encoders = Encoders   // IDC_STATIC_ENCODERS
+Error  = Error        // IDC_STATIC_ERROR
+PWM    = PWM         // IDC_STATIC_PWM 
+
+// Shimon1
+[MotionInfoDialog]
+Caption = Movement Information
+AxisNum1 = Axis #: // IDC_STATIC_AXISNUM1
+PositionError = Position Error: // IDC_STATIC_POSIT_ERROR
+HomeSwitches = Home Switches:  // IDC_STATIC_HOME_SWITCH
+PWM = PWM               //IDC_STATIC_PWM
+AxisNum2 = Axis #:  // IDC_STATIC_AXISNUM2
+Value = Value:      // IDC_STATIC_VALUE
+
+// Shimon1
+[ProgramMessagesDialog]
+Caption = Messages
+Date = Date
+Time = Time
+Message = Message
+
+// Shimon1
+[ChartToPrintDialog]
+Caption = Chart To Print
+SelectChart = Select a Chart                 // IDC_STATIC_FRAME
+Axis1 = Axis #1 // IDC_RADIO_AXIS_1
+Axis2 = Axis #2 // IDC_RADIO_AXIS_2
+Axis3 = Axis #3 // IDC_RADIO_AXIS_3
+Axis4 = Axis #4 // IDC_RADIO_AXIS_4
+Axis5 = Axis #5 // IDC_RADIO_AXIS_5
+Axis6 = Axis #6 // IDC_RADIO_AXIS_6
+Axis7 = Axis #7 // IDC_RADIO_AXIS_7
+Axis8 = Axis #8 // IDC_RADIO_AXIS_8
+
+[ChartsPropDialog]
+;new lang
+Caption = Chart Options
+History = History         // IDC_STATIC_HISTORY
+Browse = &Browse...       // IDC_BUTTON_HIS_BROWSE
+RecordHistory = &Record History // IDC_CHECK_REC_HIS
+Advanced1 = &Advanced >>  // ID_CHARTS_ADV 
+Advanced2 = &Advanced <<
+NumAxis =  Axis #
+Show    = Show
+Range = Range
+Encoders = Encoders
+Error  = Error     // New
+PWM     = PWM
+OverWrite = \nThis file already exists. Do you want to replace the existing file?
+HistoryFiles = History Files
+SelectAll = &Select All
+ClearAll =  &Clear All
+ClearPWM = Clear &PWM
+DefaultRange = &Default Range
+ViewCaption = Charts - Axis #%d: Time: %0.2f, Encoders: %s, Error: %s, PWM: %s // Shimon2
+NotShow = Not Show   // Shimon2
+
+[PeriphDialog]
+Caption = Hardware Setup
+PeripheralsRadBut  = Peripherals // IDC_RADIO_PERIPH
+RobotRadBut = Robot              // IDC_RADIO_ROBOT 
+Axis7Txt    = Axis 7:            // IDC_STATIC_AX7
+Axis8Txt    = Axis 8:            // IDC_STATIC_AX8
+
+[AdvOptions]
+Caption = Advanced Options
+AdvCmnds = Advanced Commands      // IDC_CHECK_ADV_COMM 
+ViewFlexCmnds = ViewFlex Commands // IDC_CHECK_VF_COMM
+Warning1 = Warning:\nParameters are used to adapt the controller to a particular robotic system.\nOnly skilled operators should attempt to manipulate parameters.\n
+Warning2 = Never change parameter values while the robot or peripheral axes are in motion.\nWorking with incorrect parameter settings may result in unexpected movements\nor damage to the robot arm or peripheral axes.\n
+Warning3 = Impact protection parameters monitor the servo axes for abnormal conditions\nsuch as encoder and power failure, and impact.\nWhen such conditions are detected, the motors are disabled.\n
+
+[FindObjectDialog]
+Caption = Find Object
+ModelName = Model Name       // IDC_STATIC_MODEL_NAME
+NumberObject = Object Number //IDC_STATIC_NUMBER_OBJECT
+
+[FindBlobsDialog]
+Caption = Find Blobs
+BlobsName = Blobs Name    // IDC_STATIC_BLOBS_NAME
+NumberBlobs = Blobs Number // IDC_STATIC_NUMBER_BLOBS
+
+[SetPositionDialog]
+Caption  = Set Position
+Position = Position       // IDC_STATIC_POSITION
+Row      = Row            // IDC_STATIC_ROW
+Z        = Z (mm)         // IDC_STATIC_Z_MM
+
+[ExternalFunctionDialog]
+Caption = External Function
+ScriptName = Script Name   // IDC_STATIC_SCRIPT_NAME
+Function   = Function      // IDC_STATIC_FUNCTION
+Parameter  = Parameter     // IDC_STATIC_PARAMETER
+Return     = Return        // IDC_STATIC_RETURN
+
+[GetValueDialog]
+Caption      = Get Value
+VariableName = Variable Name  // IDC_STATIC_VARIABLE_NAME 
+Row          = Row            // IDC_STATIC_ROW
+Column       = Column         // IDC_STATIC_COLUMN
+
+[ChangeTableDialog]
+Caption = Change Table
+Row     = Row          // IDC_STATIC_ROW
+Column  = Column       // IDC_STATIC_COLUMN
+Value   = Value        // IDC_STATIC_VALUE
+
+; For TPMesages section length of strings up to 20 characters.
+[TPMessages]
+SPLINE_STR   =	Spline\s  
+MOVE_STR    =	Move\s 
+MOVEC_STR  =	MoveC\s
+MOVEL_STR  =	MoveL\s
+INSERT_STR  =	Insert\s
+DELETE_STR =	Delete\s
+SPEED_STR  =	Speed\s 
+SPEEDL_STR =	SpeedL\s
+RECORD_STR =	Record\s
+RUN_STR    =	Run\s   
+CONALL_STR  =	Con all <enter>
+COFFALL_STR =	Coff all <enter>
+CON_STR        =	con\s   
+COFF_STR      =	coff\s          
+ENTER_STR    =	<enter>
+STATUS_STR   =	Group:  Ax:--
+JOINTS_STR   =	\sJOINTS     
+XYZ_STR      =	\s\sXYZ      
+TOOL_STR      =	\sTOOL       
+UNDEF_STR    =	Undefined function!
+AX_STR           =	Axis\s    
+SEL_STR         =	Selected  
+AX_SEL_STR         =	Axis %d Selected 
+SIN_STR          =	Single Step      
+ABORT_STR    =	Abort                    
+ROLL_STR       =	Roll             
+PITCH_STR      =	Pitch            
+EMERG_STR   =	\s\sEMERGENCY !          
+AUTO_STR      =	\sTP in auto mode.\n  Teach mode will\n abort all  programs.
+AUTO_HOME_STR =  \n\sTP in auto mode  
+ERR_STR         =	TP error      
+SELECTA_STR =	Select Axis\s         
+OPEN_STR      =	Open Gripper\s        
+CLOSE_STR    =	Close Gripper\s       
+CJOINT_STR    =	Joints                
+CTOOL_STR     =	Tool                  
+CXYZ_STR      =	XYZ           
+GROUP_STR     =	Group                 
+CLEAR_STR     =	Clear                 
+MOTION_END    =  Motion completed!   
+MOTION_ABORTED = Motion aborted!    
+TP_NORUN       = Command not allowed!  
+TP_INV_AX      = Invalid axis!       
+TP_INV_GROUP   = Invalid group!      
+TP_INIT        = \sInitialization\n\n  Please  wait ...
+TP_NOT_ACTIVE  =  Not active.
+TP_TEACH_MODE  =  \sTP in teach mode.
+CNTRLR_OFF     = \sController OFF!
+CARTES_BRIEF   = XYZPR
+HomingAll = Homing all axes...
+HomingRobot = Homing robot...
+HomingAxis = Homing axis %d...  
+HomingEnd = Homing complete!
+Done = Done.\s
+
+ERR_NOT_RESPOND   = Ctrl not responding!
+ERR_HOME_NOT_DONE = Homing incomplete!
+ERR_CON_DISAB    = Control disabled!
+ERR_INVAL_COOR   = Invalid coordinate(s)!
+ERR_ROB_SPACE    = Robot workspace!
+ERR_ENC_SPACE    = Encoder workspace!
+ERR_JNT_SPACE    = Joint workspace!
+ERR_XYZ_SPACE    = XYZ workspace!
+ERR_INV_AX_TYPE  = Invalid axis type!
+ERR_MOV_PROGR    = Motion in progress!
+ERR_CONF_CHANGE  = Configur. change!
+ERR_EXCCES_SPEED = Excessive speed !
+ERR_EXCCES_ACCL  = Excessive accel.!
+ERR_UNASS_POINT  = Unassigned point!
+ERR_IMPACT	 = Impact!
+ERR_THERMIC	 = Thermic overload!
+ERR_CIRC_PATH    = Cannot move on path!
+TP_ERR		 = Error #%d!
+;end new lang
+
+[ApplicationErrors]
+; See WCRES.XXX file ApplicationStrings section
+
+;new lang
+IllegImport3D = The 3D model cannot be imported. Incompatible hardware configuration.
+IllegOpenProj = The project cannot be opened. Incompatible hardware configuration.
+PeriphConf = The peripherals and positions are not compatible! Change the peripheral setup or positions.
+ContrNotRespondFull = The controller is not responding. //ERR_NOT_RESPOND
+ContrNotRespondBrief  = There is no response from the controller.
+HomeAborted = Homing aborted by user. //ERR_HOME_ABORTED
+InvalCoor = Invalid encoder/coordinate value:  %s
+;end new lang
+
+EmergMes = Emergency! All programs aborted!  // ERR_EMERG
+ImpactMes = Position error! The motion is too great or an impact has occurred.  // ERR_TRCK
+
+;new lang1
+NoMoveSpecPath = The movement cannot be executed along the specified path !   // ERR_SKIN
+
+FatalErr = Fatal Error !  // ERR_FATAL
+InvalFile = Invalid file name !   // ERR_INVNM
+
+;new lang
+InvalPar =  Invalid parameter !    // ERR_INVPAR
+InvalPar2 =  Invalid parameter: %s !
+InvalParSet =  Invalid parameter set: %s !
+PosNoWorksp =  The position is not in the workspace !
+KinCfgPar = Kinematics: Invalid configuration parameters !  // KIN_CFG
+KinDivZero = Kinematics: Division by zero !  // KIN_ZERO
+;end new lang
+
+CartWorkspace1 =  The position is not in the Cartesian workspace.\n(Kinematics: Alpha error) // KIN_ALPHA
+CartWorkspace2 =  Position is not in the Cartesian workspace.\n( Kinematics: Beta error )   // KIN_BETA
+ThermOver =  Thermic overload !  // ERR_THR
+
+;new lang
+ContrBoxOff =  Controller is off. Turn it on.  // ERR_PWOFF
+ContrBoxErr =  Controller error !  // ERR_PB
+;end new lang
+
+InvalRobType =  Invalid robot type!  // ERR_ROBT
+FileNotFound = Path or file not found!   // ERR_PF_NF
+
+;new lang
+TooManyOpFiles =  Too many files are open!  // ERR_TOO_F
+FileAccsDen = Access to the file is denied! // ERR_PER_DEN
+;end new lang
+
+InvalAccsCode = Invalid file access code! // ERR_IN_ACC
+UnabCloseFile = Unable to close the file!  // ERR_CLOSE
+InternErr = Internal system error!  // ERR_UK_ERR
+
+;new lang
+BadFileName = Invalid file name!  // ERR_BAD_FN
+ErrWrPar = An error occured while writing the parameters!       // ERR_PAR_WR
+ErrRePar = An error occured while reading the parameters!   // ERR_PAR_RE
+NoTimeHome = Time for homing has elapsed, axis %d.    // ERR_HT
+;end new lang
+
+UnabFindHomeSw = Unable to find the home switch!   // ERR_HNF
+AxNotCon = The axis is not connected! // ERR_NOT_CONNECT
+InvalAxNum = Invalid axis number!  // ERR_A_BIG
+InvalAxType = Invalid axis type! Axis No %d     // ERR_AXTYPE
+MotProgress = Motion in progress!  // ERR_MOVP
+InvalCoorType = Invalid coordinate type!   // ERR_INCOO
+PosNoRobWorksp = The position is not in the robot workspace!          // ERR_INV
+
+;new lang
+PosNoEncWorksp = The position is not in the encoder workspace. Axis: %d. // ERR_ENC_INV
+PosNoJointWorksp = The position is not in the joint workspace. Axis: %d. // ERR_JNT_INV
+;end new lang
+
+PosNoCartWorksp = The position is not in the Cartesian workspace!     // ERR_XYZ_INV
+PosNoPerWorksp = The position is not in the peripheral workspace!     // ERR_B_INV
+InvalMotDur = Invalid time duration for the motion!                   // ERR_TIME_PAR
+InvalAccPar = Invalid acceleration parameter!                     // ERR_A_PAR
+
+;new lang
+InvalIncAccPar = Invalid parameter for acceleration increase!    // ERR_AA_PAR
+
+InvalVel = Invalid velocity!     // ERR_VELO_PAR
+UnableExecMove = Robot cannot execute movement due to angle of robot arm at axis 3!  // ERR_CCHANGE
+RobAxNotHomed = Robot/axis has not been homed!             // ERR_MAN_HM_ND
+RobNotHomed = Robot has not been homed!                // ERR_ROBOT_HM_ND
+PerNotHomed = Peripheral axis has not been homed!        // ERR_AXIS_HM_ND
+ExcesSpeed = Excessive speed required!                  // ERR_SPEED
+ExcesAccl = Excessive acceleration required!      // ERR_ACCL
+InvalMoveDur = Invalid movement duration!     // ERR_MDUR
+ZeroVel = Zero velocity!                     // ERR_VEL_Z
+AccPar01 = Acceleration parameters must be between 0.0 and 1.0.  //  ERR_PROC
+
+;new lang
+InvalTypeMot = Invalid motion type!                           // ERR_MTYP
+InvalTypeCoor = Invalid coordinate type!                   // ERR_CTYP
+;end new lang
+
+UnablInitPar = Unable to initialize parameters while robot is moving!   // ERR_IWM
+ContrDis = Control disabled!    // ERR_COFF
+InvalPosData = Invalid position data!   // ERR_INDAT
+OutMemPos = Out of memory - positions!   // ERR_SPC
+RelMore32Pos = Relative chain loops or exceeds 255 positions!   //  ERR_RCR
+OrigRelPos = This position is used as the origin of relative position:  // ERR_ORG
+TheInvalPos = This position is not valid!              // ERR_PINV
+VectDiffGroup = Position vectors of different groups are not allowed!   // ERR_VEC_GRP
+InvalPosName = Invalid position name!   // ERR_PNAM
+InvalNumAx = Invalid number of axes!  // ERR_AXNUM
+UnsupGroup = Unsupported group!     // ERR_GRP_NSP
+InvalGroup = Invalid group!   // ERR_GRP_INV
+NotVecPos = Not a vector type position!   // ERR_NO_VEC
+
+;new lang
+UndefPos = The position is undefined!      // ERR_UNASS
+UndefRobPos = The robot position is undefined!      // ERR_UNASS_ROBOT
+UndefPerPos = The peripheral position is undefined!  // ERR_UNASS_PERIPH
+;end new lang
+
+InvalGripPerAx = Invalid gripper or peripheral axis!   // ERR_GRP_B
+InvalVer = Invalid version number:  // ERR_VER
+InvalIONum = Invalid I/O number!  // ERR_ION
+InvalIOVal = Invalid I/O value!   // ERR_IOV
+MotOutWorksp = The motion is outside the robot workspace!  //   ERR_MWRK
+ContrLock = Controller: Another application has locked the controller!  // COMM_LOCK
+
+;new lang1
+WinVer = Windows 98 is required. // wc_VER
+
+;ACLC Communication Dialog
+ACLCommTitle = ACL Controller Communication
+SerialPort = Current serial communication port:
+SavePort   = &Save Port
+GoOnLine =   &Go On-Line
+;GripperSetupDialog
+GripSetTitle = Gripper Setup
+GripType = Gripper Type
+ElectrGrip = &Electric (Axis 6)
+PneuGrip =   &Pneumatic (Output Controlled)
+OutNumber = Connected to output #
+StateClosed = Output state for closed gripper
+DelayGrip =  Time delay (1/100 sec.)
+OutContrGrip =  Output Controlled Gripper
+OnGrip    = O&n
+OffGrip = O&ff
+;----------------------------------------------
+;ACL RS232 Errors
+PortUsedAnotherDev =  Communication error. The RS232 port ( COM %d ) is being used by another device or application.   // ACL_IE_HARDWARE
+
+;ACL Hardware Errors
+ACLCOffLine = ACL controller is off-line.  // ACL_HE_OFFLINE
+CannotAccessACLC = Cannot access ACL hardware!   // ACL_HE_UNHARD
+InvalAxisXYZ = Invalid axis for manual XYZ mode!  // ACL_HE_BADMANUALXYZAXIS
+HardwBusyUpload = Hardware busy - uploading!   // ACL_HE_BUSYUPLOAD
+ACLSoftIncomp = ACL software is incomplete!  // ACL_HE_ACLINCOMPLETE
+HardwBusyRetstatus = Hardware busy - return status!   // ACL_HE_BUSYRETURN
+InvalRobTypeACL = Invalid robot type!  // ACL_HE_INVALIDROBOT
+InvalSoft = Invalid software input (syntax error)!   // ACL_HE_BADSOFTWARE
+InvalPeriphData = Invalid format of accessories data!   // ACL_HE_BADACCFORMAT
+EmergACL = Emergency !!! //ACL_HE_EMERGENCY
+
+;new lang
+ReqPrivMode = Command ignored - requires privilege mode! // ACL_HE_PRIVILEGE
+EnterForAutoMode = Type 'AUTO <ENTER>' to activate Auto mode.  // ACL_HE_MUSTAUTO
+;end new lang
+InvalACLCConfig = Invalid ACL controller configuration.\nThe configuration will erase all programs and positions from controller battery backed-up RAM.\nDo you want to perform the configuration? // ACL_HE_BADCONFIG
+InvalACLCPerSetup = Invalid ACL controller peripheral setup.\nDo you want to download the peripheral device parameters?   // ACL_HE_BADPERIPH
+
+;ACL Logic Errors
+SynchrErr = Synchronization logic error.  //ACL_LE_SYNC
+
+;ACL Notification
+ACLCOnLine = ACL controller is on-line.   // ACL_NT_ONLINE
+UplACLtoPC = Uploading from ACL controller to PC.     // ACL_NT_UPLOADINPROGRESS
+DownlPCtoACL = Downloading from PC to ACL controller.   // ACL_NT_DOWNLOADINPROGRESS
+WantConfig = Do you want to perform initialization?   // ACL_NT_SURE_CONFIG
+PerfACLCConfig = Performing ACL controller configuration... // ACL_NT_CONFIGINPROGRESS
+Verific = Performing verification... // ACL_NT_VERIFYINPROGRESS
+ACLCConfigReq = ACL controller configuration is required.\nThis configuration will erase all programs  and positions from controller battery backed-up RAM.\nDo you want to perform the configuration?// ACL_NT_SURE_CONFIGANDBAXIS
+GripChange = Robot will be redrawn at the home position when gripper is changed.\nDo you really want to change the gripper?// ACL_NT_GRIPPER_CHANGE
+NoFreeOut = Current cell does not contain free output to connect output-controlled gripper.\s   // ACL_NT_NO_OUTPUTS
+WantInit = Do you want to perform initialization?   // ACL_NT_SURE_PERIPHERALS
+
+;User Messages (UM) ( to be shown in ScorBase ) that map others
+HomeFail = Home failure axis.  // ACL_UM_HOMEFAILUREAXIS
+LowLim = Lower limit axis.   // ACL_UM_LOWLIMITAXIS
+UpLim = Upper limit axis.  // ACL_UM_UPPERLIMITAXIS
+ImpProt = Impact protection axis. // ACL_UM_IMPACTPROTECTION
+ThermOverAx = Thermic overload axis.   // ACL_UM_THERMICOVERLOAD
+UndefPosGr = Undefined position or incompatible group.  // ACL_UM_UNDEFPOINT
+InvalPosCoor = Invalid position coordinates.  // ACL_UM_BADPOINTCOO
+ArgLong = Argument too long.  // ACL_UM_TOOLONGARG
+IndDatErr = Index or data error!  // ACL_UM_INDORDATAERROR
+InvalAx = Invalid axis. // ACL_UM_BADAXIS
+
+;new lang1
+NoCoorPos = No coordinates assigned to the position.  // ACL_UM_NOPOSITION
+
+TrajErr = Trajectory error!  // ACL_UM_TRAJECTORYERROR
+AxisDis = Axis disabled.  // ACL_UM_AXISDISABLED
+InvalCartCoor = Invalid Cartesian coordinates. // ACL_UM_BADCARTESIAN
+InvalPosCoor = Invalid position coordinates. // ACL_UM_RTBADPOINTCOO
+DisabPrior = Disable prior to FORCE operation. // ACL_UM_DISABLEPRIOR
+BusErrTrap = ACL controller error: Bus Error Trap.\nSCORBASE is off-line // ACL_UM_BUSERRORTRAP
+SysHalt = FATAL HARDWARE ERROR, SYSTEM HALTED (what) // ACL_UM_WHAT
+XYZNotAllow = XYZ NOT ALLOWED // ACL_UM_XYZNOTALLOWED
+GrAxNotHome = Group/axis has not been homed.  // ACL_UM_GROUPNOTHOMED
+ACLCEmer = EMERGENCY: All programs aborted\n and motors disabled.   // ACL_UM_EMERGENCY
+ExitEmer = EXIT FROM EMERGENCY: All commands allowed\n and motors enabled. // ACL_UM_EXITEMERGENCY
+
+;new lang1
+SpeedFast = Excessive speed. // ACL_UM_SPEEDTOOFAST
+
+AxNotHome = Axis not configured for homing.  // ACL_UM_AXISNOTCONFIGHOME
+TPMustAuto = Cannot execute command, TP must be in AUTO mode. // ACL_UM_CANNOTEXECTP
+ExcessSpeedReg = Excessive speed required. // ACL_UM_EXCESSIVESPEED
+UnablExecMot = Unable to execute this motion - peripherals have not been configurated.   // ACL_UM_UNABLE_EXEC_PERIPH
+ACLCMustConfig = ACL controller configuration is required.\nThe configuration will erase all programs from controller battery backed-up RAM.\nDo you want to perform the configuration? // ACL_UM_MUSTCONFIG
+;new lang
+WhenSCCMot = When the speed controlled conveyor is in motion, do not attempt to move other peripheral axes.  // ACL_UM_SCC
+PosOutWorkEnv = Position is outside of the work envelope!   // ACL_UM_RANGE
+RelEmerButton = To perform an action release the emergency button. //  ACL_UM_EMERG_WARN
+ErrDelAbsPos = Position %d cannot be deleted as it is the base position for relative position %d.
+;end new lang
+;----------  For "Write" SCORBASE command. -------------
+ErrorCharTemplLib = Error in character template library.  Contact your product vendor. // ERR_CHAR_TEMPL_LIB
+CannotWriteChar = Robot cannot reach position required for writing character: %c   character # %d. // ERR_CANNOT_WRITE_CHAR 
+WrongPosType =  Wrong type of position:  %d.  //  ERR_WRONG_POS_TYPE
+UndefPosNum =   Undefined position: %d.       //  ERR_UNDEF_POS
+CharBasePos =     Base position: %d.  // ERR_CHAR_BASE_POS
+PosCartWorkspace = Position  %d  is not in the Cartesian workspace! // ERR_CART_WORKSPACE
+RelPosData = Relative: X:%5.1f  Y:%5.1f  Z:%5.1f  P:%5.1f  R:%5.1f //  ERR_REL_POS
+AbsPosData = Absolute: X:%5.1f  Y:%5.1f  Z:%5.1f  P:%5.1f  R:%5.1f //  ERR_ABS_POS
+
