@@ -22,6 +22,7 @@ function confirm = ScorSetPendantMode(pMode)
 %               Erik Hoss
 %   01Sep2015 - Added ScorIsReady to eliminate error(s) associated with
 %               setting the teach pendant mode before ScorBot is homed.
+
 %% Check inputs
 switch lower(pMode)
     case 'auto'
@@ -60,7 +61,7 @@ if ~strcmp(pMode,ScorGetPendantMode)
             tic;
         end
         pause(0.1);
-        %TODO - add stopping condition
+        %TODO - add time-based stopping condition
     end
     if mod(iter,nDots+1) ~= 0
         fprintf( char(repmat(8,1,mod(iter,nDots+1))) );
@@ -71,3 +72,4 @@ if ~strcmp(pMode,ScorGetPendantMode)
 else
     confirm = true;
 end
+

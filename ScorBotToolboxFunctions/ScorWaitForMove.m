@@ -192,6 +192,13 @@ function varargout = ScorWaitForMove(varargin)
 %               pause that is added when data is collected or if
 %               plots/animations are used.
 %   28Aug2015 - Updated error handling
+%   15Sep2015 - Added timeout to execute quick move, and execute regular
+%               move
+
+% Known Issues
+%   15Sep2015 - Running ScorWaitForMove immediately following a
+%               ScorSetTeachPendant('Auto') when the teach pendant is in 
+%               'Teach' will result in a "TIMEOUT" 
 
 %% Start timer
 t_swfm = tic; 
@@ -324,6 +331,16 @@ if ~posOn && ~jntOn && ~robOn && ~getData
                         varargout{3} = CollectedData;
                     end
                     return
+                else
+                    if toc(t_swfm) > 8
+                        if showProgress
+                            fprintf( char(repmat(8,1,mod(iter,4))) );
+                            fprintf('...');
+                            fprintf('TIMEOUT\n');
+                            ScorDispError(errStruct);
+                            return
+                        end
+                    end
                 end
             end
         end
@@ -535,6 +552,16 @@ while ScorIsMoving
                 ScorDispError(errStruct);
                 confirm = false;
                 break
+            else
+                if toc(t_swfm) > 8
+                    if showProgress
+                        fprintf( char(repmat(8,1,mod(iter,4))) );
+                        fprintf('...');
+                        fprintf('TIMEOUT\n');
+                        ScorDispError(errStruct);
+                        return
+                    end
+                end
             end
         end
     end

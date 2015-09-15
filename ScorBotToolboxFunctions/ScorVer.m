@@ -18,12 +18,18 @@ function varargout = ScorVer
 %   28Aug2015 - Maintain speed or movetime using ScorGetSpeed and
 %               ScorGetMoveTime
 %   28Aug2015 - Updated error handling
+%   15Sep2015 - Updates to ScorWaitForMove, ScorSafeShutdown,
+%               ScorSetPendantMode, ScorIsReady, ScorDispError, and 
+%               ScorParseErrorCode to address existing bugs, add a timeout
+%               to ScorWaitForMove, and add enable/disable display
+%               capabilities to ScorDispError and ScorIsReady for
+%               non-critical errors (e.g. 970 and 971).
 
 A.Name = 'ScorBot Toolbox';
-A.Version = '2.1.4';
+A.Version = '2.1.5';
 A.Release = '(R2014a)';
-A.Date = '31-Aug-2015';
-A.URLVer = 4;
+A.Date = '15-Sept-2015';
+A.URLVer = 1;
 
 msg{1} = sprintf('MATLAB %s Version: %s %s',A.Name, A.Version, A.Release);
 msg{2} = sprintf('Release Date: %s',A.Date);

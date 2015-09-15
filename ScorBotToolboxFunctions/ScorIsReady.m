@@ -1,4 +1,4 @@
-function [isReady,libname,errStruct] = ScorIsReady()
+function [isReady,libname,errStruct] = ScorIsReady(dispFlag)
 %SCORISREADY checks if ScorBot is ready for use.
 %   isReady = SCORISREADY returns 1 if ScorBot is ready for use and 0 
 %   otherwise. Any errors encountered by ScorBot will be printed to the 
@@ -18,6 +18,11 @@ function [isReady,libname,errStruct] = ScorIsReady()
 %       errStruct.Message    - Message describing ScorBot error code
 %       errStruct.Mitigation - Suggested mitigation for ScorBot error
 %
+%   [___] = SCORISREADY('Display All') displays all messages, including 
+%       non-critical teach/auto messages returned by ScorBot. "Display All"
+%       also prints all messages to the command prompt, regardless of
+%       specified outputs.
+%
 %   See also ScorInit ScorHome
 %
 %   (c) M. Kutzer 10Aug2015, USNA
@@ -29,6 +34,8 @@ function [isReady,libname,errStruct] = ScorIsReady()
 %               ScorGetControl and error states
 %   01Sep2015 - Added special case for Teach Pendant messages so isReady is
 %               held true
+%   15Sep2015 - Updated to suppress teach pendant messages by default, and
+%               display in black if "Display All" flag is set.
 
 %% Set default error structure
 errStruct = ScorParseErrorCode([]);
@@ -103,9 +110,22 @@ if sError == 903
 end
 
 %% Display error message if user does not get the output
-if nargout < 3
-    ScorDispError(errStruct);
+% Check inputs
+if nargin == 0
+    dispFlag = 'Display Critical';
 end
+
+switch lower(dispFlag)
+    case 'display all'
+        ScorDispError(errStruct,dispFlag);
+    case 1
+        ScorDispError(errStruct,dispFlag);
+    otherwise
+        if nargout < 3
+            ScorDispError(errStruct,dispFlag);
+        end
+end
+
 
 %% Output special case for Teach Pendant messages
 if errStruct.Code == 970 || errStruct.Code == 971

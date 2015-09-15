@@ -27,12 +27,20 @@ function confirm = ScorSafeShutdown()
 %   31Aug2015 - Updated to reorder turning off digital out and deleting the
 %               ScorGetControl file
 %   01Sep2015 - Added ScorWaitForMove prior to entering shutdown
+%   15Sep2015 - Added ScorSetPendantMode('Auto') prior to ScorWaitForMove.
 
 %% Create global shutdown figure handle
 ShutdownFig = 1845;
 
 %% Setup confirmation flags array
 confirm = [];
+
+%% Set Teach Pendant to Auto Mode
+isAuto = ScorSetPendantMode('Auto');
+if ~isAuto
+    confirm(end+1) = false;
+    warning('ScorBot must be in Auto mode during shutdown.');
+end
 
 %% Wait for any/all previous moves
 ScorWaitForMove;

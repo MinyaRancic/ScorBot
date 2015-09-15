@@ -16,6 +16,9 @@ function errStruct = ScorParseErrorCode(eCode)
 %
 %   (c) M. Kutzer, D. DiSerio, & C. Wick, 28Aug2015, USNA
 
+% Updates
+%   15Sep2015 - Updated to include mitigation for message 912
+
 % TODO - Complete this function
 
 %% Set Defaults
@@ -291,6 +294,8 @@ msg{910} = sprintf('%s: Invalid axis type',eType);
 msg{911} = sprintf('%s: Motion in progress',eType);
 mit{911} = sprintf('Use "ScorWaitForMove" between "ScorSet" commands that result in manipulator or gripper motion'); 
 msg{912} = sprintf('%s: Configuration change',eType);
+mit{912} = sprintf('Run "ScorGoHome" to move the ScorBot to the home position, if problem persists "ScorHome"');
+qfx{912} = sprintf('ScorGoHome;');
 msg{913} = sprintf('%s: Speed',eType);
 msg{914} = sprintf('%s: Acceleration',eType);
 msg{915} = sprintf('%s: Not enough space to store all points',eType);
