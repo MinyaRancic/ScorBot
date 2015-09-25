@@ -1,4 +1,4 @@
-function scorSim = ScorSimInit()
+function scorSim = ScorSimInit(varargin)
 % SCORSIMINIT initializes a visualization of the ScorBot
 %   scorSim = ScorSimInit initializes a visualization of the ScorBot in a
 %   new figure window, and returns the scorSim structured array.
@@ -15,6 +15,9 @@ function scorSim = ScorSimInit()
 %       ScorSimGetXYZPR etc
 %
 %   (c) M. Kutzer, 13Aug2015, USNA
+
+% Updates
+%   25Sep2015 - Updated to adjust default view angle to match student view
 
 %% Initialize output
 scorSim.Figure = [];
@@ -54,3 +57,6 @@ end
 
 %% Home ScorSim
 ScorSimGoHome(scorSim);
+
+%% Set default view
+view([(-37.5+180),30]);

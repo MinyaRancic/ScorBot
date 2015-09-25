@@ -4,7 +4,7 @@ function ScorSimSetBSEPR(scorSim,BSEPR)
 %   SCORSIMSETBSEPR(scorSim,BSEPR) set the ScorBot visualization specified 
 %   by "scorSim" to the specified 5-element joint configuration "BSEPR".
 %
-%   See also ScorSimInit ScorSimSetXYZPR
+%   See also ScorSimInit ScorSimSetDeltaBSEPR ScorSimSetXYZPR
 %
 %   (c) M. Kutzer, 13Aug2015, USNA
 

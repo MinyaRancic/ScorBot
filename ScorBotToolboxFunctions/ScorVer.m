@@ -24,9 +24,10 @@ function varargout = ScorVer
 %               to ScorWaitForMove, and add enable/disable display
 %               capabilities to ScorDispError and ScorIsReady for
 %               non-critical errors (e.g. 970 and 971).
+%   25Sep2015 - Updates to ScorSim* including ScorSimPatch
 
 A.Name = 'ScorBot Toolbox';
-A.Version = '2.1.5';
+A.Version = '2.2.0';
 A.Release = '(R2014a)';
 A.Date = '15-Sept-2015';
 A.URLVer = 1;

@@ -4,7 +4,7 @@ function ScorSimSetXYZPR(scorSim,XYZPR)
 %   SCORSIMSETXYZPR(scorSim,XYZPR) set the ScorBot visualization specified 
 %   by "scorSim" to the specified 5-element task configuration "XYZPR".
 %
-%   See also ScorSimInit ScorSimSetBSEPR
+%   See also ScorSimInit ScorSimSetDeltaXYZPR ScorSimSetBSEPR
 %
 %   (c) M. Kutzer, 14Aug2015, USNA
 

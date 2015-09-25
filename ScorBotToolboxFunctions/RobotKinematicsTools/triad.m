@@ -120,11 +120,13 @@ for i = 1:2:numel(varargin)
 end
 
 %% Apply axis labels
-if numel(axislabels) ~= numel(kids)
-    error('An axis label must be specified for each axis.')
-end
-if ~iscell(axislabels)
-    error('Axis labels must be specified as a 1x3 cell array.');
+if ~isempty(axislabels)
+    if numel(axislabels) ~= numel(kids)
+        error('An axis label must be specified for each axis.')
+    end
+    if ~iscell(axislabels)
+        error('Axis labels must be specified as a 1x3 cell array.');
+    end
 end
 
 if ~isempty(axislabels)
