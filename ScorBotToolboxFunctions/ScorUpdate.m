@@ -7,6 +7,8 @@ function ScorUpdate
 %   27Aug2015 - Updated to include check for multiple the newest update on
 %               MATLAB Central (currently looks 25 versions ahead).
 %   03Sep2015 - Updated to download from GitHub
+%   29Sep2015 - Updated to include simulation test and istall for operating
+%               systems outside of Windows 32-bit (for simulation only).
 
 % TODO - Find a location for "ScorBotToolbox Example SCRIPTS"
 % TODO - update function for general operation
@@ -65,6 +67,7 @@ if ~ok
 end
 
 %% Test simulation functionality
+fprintf('Testing simulation tools...'); 
 sim = ScorSimInit;
 ScorSimPatch(sim);
 lims = ScorBSEPRLimits;
@@ -80,5 +83,9 @@ for i = 1:5
         drawnow;
     end
 end
+fprintf('[Complete]\n');
+
+%% Complete installation
+fprintf('Installation complete.\n');
 
 end
