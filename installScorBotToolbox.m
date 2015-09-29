@@ -367,5 +367,5 @@ end
 
 %% Rehash toolbox cache
 fprintf('Rehashing Toolbox Cache...');
-%rehash TOOLBOXCACHE
+rehash TOOLBOXCACHE
 fprintf('[Complete]\n');
