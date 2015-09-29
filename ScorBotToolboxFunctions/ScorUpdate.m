@@ -49,14 +49,36 @@ cd(pname_star);
 %% Install ScorBot Toolbox
 installScorBotToolbox(true);
 
-%% Test functionality
-SCRIPT_Basic_Test
+%% Test ScorBot functionality
+if ispc
+    switch computer
+        case 'PCWIN'
+            SCRIPT_Basic_Test
+    end
+end
 
 %% Move back to current directory and remove temp file
 cd(cpath);
 [ok,msg] = rmdir(pname,'s');
 if ~ok
     warning('Unable to remove temporary download folder. %s',msg);
+end
+
+%% Test simulation functionality
+sim = ScorSimInit;
+ScorSimPatch(sim);
+lims = ScorBSEPRLimits;
+for i = 1:5
+    theta{i} = linspace(lims(i,1),lims(i,2),100);
+end
+
+for i = 1:5
+    BSEPR = [0,pi/2,-pi/2,0,0];
+    for j = 1:numel(theta{i})
+        BSEPR(i) = theta{i}(j);
+        ScorSimSetBSEPR(sim,BSEPR);
+        drawnow;
+    end
 end
 
 end

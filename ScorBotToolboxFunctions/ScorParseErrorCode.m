@@ -18,6 +18,7 @@ function errStruct = ScorParseErrorCode(eCode)
 
 % Updates
 %   15Sep2015 - Updated to include mitigation for message 912
+%   28Sep2015 - Updated to include mitigation for message 516
 
 % TODO - Complete this function
 
@@ -139,6 +140,8 @@ msg{550} = sprintf('%s: Invalid points of the arc',eType);
 msg{551} = sprintf('%s: Invalid robot type',eType);
 msg{560} = sprintf('%s: Invalid mode',eType);
 msg{561} = sprintf('%s: Time for homing elapsed',eType);
+mit{561} = sprintf('Run "ScorHome" to re-home ScorBot');
+qfx{561} = sprintf('ScorHome;');
 msg{562} = sprintf('%s: Invalid or unrecognized command',eType);
 msg{563} = sprintf('%s: Home switch not found',eType);
 msg{564} = sprintf('%s: Plus limit',eType);

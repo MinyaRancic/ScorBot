@@ -9,13 +9,14 @@ function pMode = ScorGetPendantMode()
 
 % Updates
 %   28Aug2015 - Updated error handling
+%   25Sep2015 - Ignore isReady flag
 
 %% Check ScorBot and define library alias
 [isReady,libname] = ScorIsReady;
-if ~isReady
-    pMode = [];
-    return
-end
+% if ~isReady
+%     pMode = [];
+%     return
+% end
 
 %% Get teach pendant mode
 isTeach = calllib(libname,'RIsTeach');

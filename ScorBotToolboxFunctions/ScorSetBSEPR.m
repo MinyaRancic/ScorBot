@@ -32,6 +32,8 @@ function confirm = ScorSetBSEPR(varargin)
 %   25Aug2015 - Updated correct help documentation, "J. Esposito K. 
 %               Knowles," to "J. Esposito, & K. Knowles,"
 %               Erik Hoss
+%   25Sep2015 - Updated to account for BSEPR(1) = +/-pi issue of returning
+%               successful move when no move occurs.
 
 %% Check inputs 
 narginchk(1,3);
@@ -50,6 +52,14 @@ if nInputs == 1
     BSEPR = varargin{1};
 end
 
+%% Check for known joint 1 issue
+if abs(BSEPR(1)) >= pi
+    % Force code 908
+    errStruct = ScorParseErrorCode(908);
+    ScorDispError(errStruct);
+    confirm = false;
+    return
+end
 %% Check for elbow-down condition
 if BSEPR(3) > 0
     warning('This ScorBot library does not support movements resulting in an "elbow down" configuration.');

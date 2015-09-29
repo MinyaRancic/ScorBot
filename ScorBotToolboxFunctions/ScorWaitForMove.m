@@ -183,7 +183,7 @@ function varargout = ScorWaitForMove(varargin)
 %   (c) M. Kutzer, 13Aug2015, USNA
 
 % Updates
-%   25Aug2015 - Updated correct help documentation, "J. Esposito K. 
+%   25Aug2015 - Updated to correct help documentation, "J. Esposito K. 
 %               Knowles," to "J. Esposito, & K. Knowles,"
 %               Erik Hoss
 %   25Aug2015 - Updated RobotAnimation to include previous trajectories in

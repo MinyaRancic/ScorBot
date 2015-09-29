@@ -20,13 +20,14 @@ function grip = ScorGetGripper()
 %               Knowles," to "J. Esposito, & K. Knowles,"
 %               Erik Hoss
 %   28Aug2015 - Updated error handling
+%   25Sep2015 - Ignore isReady flag
 
 %% Check ScorBot and define library alias
 [isReady,libname] = ScorIsReady;
-if ~isReady
-    grip = [];
-    return
-end
+% if ~isReady
+%     grip = [];
+%     return
+% end
 
 %% Get gripper state
 grip = calllib(libname,'RGetJaw');

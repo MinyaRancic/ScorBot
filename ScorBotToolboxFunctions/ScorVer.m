@@ -25,11 +25,16 @@ function varargout = ScorVer
 %               capabilities to ScorDispError and ScorIsReady for
 %               non-critical errors (e.g. 970 and 971).
 %   25Sep2015 - Updates to ScorSim* including ScorSimPatch
+%   25Sep2015 - Ignore isReady in ScorGetXYZPR and ScorGetBSEPR to allow
+%               users to read joints even with errors.
+%   29Sep2015 - Updates to installScorBotToolbox and ScorUpdate to allow
+%               non-Windows 32-bit OS to install simulation tools. 
+%               Additional updates to fix bugs in simulation tools.
 
 A.Name = 'ScorBot Toolbox';
-A.Version = '2.2.0';
+A.Version = '2.2.2';
 A.Release = '(R2014a)';
-A.Date = '15-Sept-2015';
+A.Date = '29-Sept-2015';
 A.URLVer = 1;
 
 msg{1} = sprintf('MATLAB %s Version: %s %s',A.Name, A.Version, A.Release);

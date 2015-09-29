@@ -31,13 +31,14 @@ function XYZPR = ScorGetXYZPR()
 %               Knowles," to "J. Esposito, & K. Knowles,"
 %               Erik Hoss
 %   28Aug2015 - Updated error handling
+%   25Sep2015 - Ignore isReady flag
 
 %% Check ScorBot and define library alias
 [isReady,libname] = ScorIsReady;
-if ~isReady
-    XYZPR = [];
-    return
-end
+% if ~isReady
+%     XYZPR = [];
+%     return
+% end
 
 %% Define variables for library function call
 confirm = 0;

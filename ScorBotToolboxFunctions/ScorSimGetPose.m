@@ -7,6 +7,9 @@ function H = ScorSimGetPose(scorSim)
 %   See also ScorSimInit ScorSimGetBSEPR ScorSimGetXYZPR 
 %
 %   (c) M. Kutzer, 13Aug2015, USNA
+%
+% Updates 
+%   29Sep2015 - Updated to correct correct BSEPR2Pose
 
 BSEPR = ScorSimGetBSEPR(scorSim);
-ScorSimSetBSEPR(BSEPR);
+H = ScorBSEPR2Pose(BSEPR);
