@@ -83,6 +83,7 @@ for i = 1:5
         drawnow;
     end
 end
+close(sim.Figure);
 fprintf('[Complete]\n');
 
 %% Complete installation
