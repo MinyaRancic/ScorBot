@@ -16,5 +16,14 @@ function ScorSimGoHome(scorSim)
 %
 %   (c) M. Kutzer, 14Aug2015, USNA
 
+% Updates
+%   01Oct2015 - Updated to include error checking
+
+%% Error checking
+if nargin < 1
+    error('The simulation object must be specified. Use "ScorSimGoHome(scorSim)".')
+end
+
+%% Go Home
 BSEPRhome = [0.00000,2.09925,-1.65843,-1.54994,0.00000];
 ScorSimSetBSEPR(scorSim,BSEPRhome);

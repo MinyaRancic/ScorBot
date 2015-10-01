@@ -11,5 +11,14 @@ function H = ScorSimGetPose(scorSim)
 % Updates 
 %   29Sep2015 - Updated to correct correct BSEPR2Pose
 
+% Updates
+%   01Oct2015 - Updated to include error checking
+
+%% Error checking
+if nargin < 1
+    error('The simulation object must be specified. Use "ScorSimGetPose(scorSim)".')
+end
+
+%% Get pose
 BSEPR = ScorSimGetBSEPR(scorSim);
 H = ScorBSEPR2Pose(BSEPR);

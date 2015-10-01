@@ -9,5 +9,14 @@ function XYZPR = ScorSimGetXYZPR(scorSim)
 %
 %   (c) M. Kutzer, 14Aug2015, USNA
 
+% Updates
+%   01Oct2015 - Updated to include error checking
+
+%% Error checking
+if nargin < 1
+    error('The simulation object must be specified. Use "ScorSimGetXYZPR(scorSim)".')
+end
+
+%% Get XYZPR
 BSEPR = ScorSimGetBSEPR(scorSim);
 XYZPR = ScorBSEPR2XYZPR(BSEPR);

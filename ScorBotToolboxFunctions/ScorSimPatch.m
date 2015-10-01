@@ -6,9 +6,15 @@ function ScorSimPatch(scorSim,varargin)
 
 % Updates
 %   29Sep2015 - Updated to correct link 5 parent/child relationship
+%   01Oct2015 - Updated to include error checking
 
 % TODO - finish documentation
 % TODO - include moving gripper
+
+%% Error checking
+if nargin < 1
+    error('The simulation object must be specified. Use "ScorSimPatch(scorSim)".')
+end
 
 %% Parse inputs
 % TODO - use varargin to specify simple/complex and coarse/fine

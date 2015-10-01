@@ -8,6 +8,15 @@ function ScorSimSetPose(scorSim,H)
 %
 %   (c) M. Kutzer, 14Aug2015, USNA
 
+% Updates
+%   01Oct2015 - Updated to include error checking
+
+%% Error checking
+if nargin < 2
+    error('Both the simulation object and end-effector pose must be specified. Use "ScorSimSetPose(scorSim,H)".')
+end
+
+%% Move simulation
 BSEPR = ScorPose2BSEPR(H);
 if ~isempty(BSEPR)
     ScorSimSetBSEPR(scorSim,BSEPR);

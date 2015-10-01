@@ -9,6 +9,15 @@ function ScorSimSetDeltaXYZPR(scorSim,dXYZPR)
 %
 %   (c) M. Kutzer, 25Sep2015, USNA
 
+% Updates
+%   01Oct2015 - Updated to include error checking
+
+%% Error checking
+if nargin < 2
+    error('Both the simulation object and change in task configuration must be specified. Use "ScorSimSetDeltaXYZPR(scorSim,dXYZPR)".')
+end
+
+%% Move simulation
 XYZPR = ScorSimGetXYZPR(scorSim);
 XYZPR = XYZPR + dXYZPR;
 ScorSimSetXYZPR(scorSim,XYZPR);

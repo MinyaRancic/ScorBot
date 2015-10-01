@@ -8,6 +8,15 @@ function ScorSimSetXYZPR(scorSim,XYZPR)
 %
 %   (c) M. Kutzer, 14Aug2015, USNA
 
+% Updates
+%   01Oct2015 - Updated to include error checking
+
+%% Error checking
+if nargin < 2
+    error('Both the simulation object and task configuration must be specified. Use "ScorSimSetXYZPR(scorSim,XYZPR)".')
+end
+
+%% Move simulation
 BSEPR = ScorXYZPR2BSEPR(XYZPR);
 if ~isempty(BSEPR)
     ScorSimSetBSEPR(scorSim,BSEPR);
