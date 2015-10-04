@@ -60,15 +60,15 @@ if ispc
     end
 end
 
+%% Test simulation functionality
+SCRIPT_BasicSimulationTest;
+
 %% Move back to current directory and remove temp file
 cd(cpath);
 [ok,msg] = rmdir(pname,'s');
 if ~ok
     warning('Unable to remove temporary download folder. %s',msg);
 end
-
-%% Test simulation functionality
-SCRIPT_BasicSimulationTest;
 
 %% Complete installation
 fprintf('Installation complete.\n');
