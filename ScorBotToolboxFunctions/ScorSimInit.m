@@ -18,6 +18,7 @@ function scorSim = ScorSimInit(varargin)
 
 % Updates
 %   25Sep2015 - Updated to adjust default view angle to match student view
+%   03Oct2015 - Updated to include gripper functionality
 
 %% Initialize output
 scorSim.Figure = [];
@@ -54,6 +55,38 @@ for i = 2:numel(scorSim.Frames)
     scorSim.Joints(i-1) = hgtransform('Parent',scorSim.Frames(i-1));
     set(scorSim.Frames(i),'Parent',scorSim.Joints(i-1));
 end
+
+
+%% Setup gripper
+% Finger Base coordinates
+n = 4;
+v(1,:) = zeros(1,n);
+v(2,:) = [44.83, 31.85,-31.85,-44.83];
+v(3,:) = repmat(-66.19,1,n);
+for i = 1:n
+    h(i) = hgtransform('Parent',scorSim.Frames(6),...
+        'Matrix',Tx(v(1,i))*Ty(v(2,i))*Tz(v(3,i)),...
+        'Tag',sprintf('FingerLinkBaseFrame%d',i));
+    g(i) = hgtransform('Parent',h(i),...
+        'Tag',sprintf('FingerLinkFrame%d',i));
+    f(i) = hgtransform('Parent',g(i),...
+        'Matrix',Tz(47.22),...
+        'Tag',sprintf('FingerTipBaseFrame%d',i));
+    d(i) = hgtransform('Parent',f(i),...
+        'Tag',sprintf('FingerTipFrame%d',i));
+end
+
+for i = 1:n
+    scorSim.Finger(i) = g(i);
+end
+
+idx = [1,4];
+for i = 1:2
+    scorSim.FingerTip(i) = d(idx(i));
+end
+
+%% Close gripper
+ScorSimSetGripper(scorSim,'Close');
 
 %% Home ScorSim
 ScorSimGoHome(scorSim);

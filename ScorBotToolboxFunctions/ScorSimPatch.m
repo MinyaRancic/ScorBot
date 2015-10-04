@@ -7,9 +7,9 @@ function ScorSimPatch(scorSim,varargin)
 % Updates
 %   29Sep2015 - Updated to correct link 5 parent/child relationship
 %   01Oct2015 - Updated to include error checking
+%   03Oct2015 - Updated to include gripper functionality
 
 % TODO - finish documentation
-% TODO - include moving gripper
 
 %% Error checking
 if nargin < 1
@@ -21,7 +21,7 @@ end
 complexity = 'Simple';
 resolution = 'Coarse';
 
-%% Setup file names
+%% Setup file names for links
 fname = 'ScorLink%d';
 switch lower(complexity)
     case 'simple'
@@ -43,7 +43,7 @@ switch lower(resolution)
         error('Unspecified resolution.');
 end
 
-%% Load files
+%% Load link files
 for i = 0:5
     for j = 1:numel(mname)
         filename = sprintf(sprintf('%s%s%s',fname,mname{j},lname),i);
@@ -58,7 +58,36 @@ for i = 0:5
         close(fig);
     end
 end
-        
+
+%% Load finger files
+for i = 1:4
+    filename = sprintf('%s%s','ScorFinger',lname);
+    open(filename);
+    fig = gcf;
+    set(fig,'Visible','off');
+    % TODO - Add error checking
+    axs = get(fig,'Children');
+    body = get(axs,'Children');
+    
+    set(body,'Parent',scorSim.Finger(i));
+    close(fig);
+end
+
+%% Load fingertip files
+tname = 'ScorFingerTip';
+for i = 1:2
+    filename = sprintf('%s%d%s',tname,i,lname);
+    open(filename);
+    fig = gcf;
+    set(fig,'Visible','off');
+    % TODO - Add error checking
+    axs = get(fig,'Children');
+    body = get(axs,'Children');
+    
+    set(body,'Parent',scorSim.FingerTip(i));
+    close(fig);
+end
+
 %% Add light
 addSingleLight(scorSim.Axes);
         

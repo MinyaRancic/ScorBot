@@ -15,7 +15,7 @@ ScorSetSpeed(100);
 
 tic;
 % Explore limits for joints 1:4
-for i = 1:5
+for i = 1:4
     for j = 1:2
         % Initialize Position
         ScorSetBSEPR(initBSEPR(i,:));
@@ -33,31 +33,24 @@ for i = 1:5
         BSEPR = initBSEPR(i,:);
         BSEPR(i) = guessLimits(i,j);
         isMove = false; % Flag track is ScorBot executes move
-        isHome = true;
         while ~isMove   % Run while loop until ScorBot moves
             % Display current status
             fprintf('Trying BSEPR = [%.3f, %.3f, %.3f, %.3f, %.3f]\n',BSEPR);
             isMove = ScorSetBSEPR(BSEPR); % Try to move
             if isMove
-                isDone = ScorWaitForMove
-                if ~isDone
-                    % Possible impact
-                    isHome = false;
-                    break
-                end
+                % If move is successful, wait for move
+                [~] = ScorWaitForMove;
+                pause(2); % this extra pause is important for getting good data
             else
+                % If move fails, reduce limit
                 BSEPR = BSEPR - dBSEPR;
             end
         end
         % Save joint limits
-        pause(2); % allow ScorBot to fully stop moving
         BSEPR_now = ScorGetBSEPR;
         if ~isempty(BSEPR_now)
+            disp(BSEPR_now(i));
             BSEPR_lims(i,j) = BSEPR_now(i);
-        end
-        % Home if necessary
-        if ~isHome
-            ScorHome;
         end
     end
 end

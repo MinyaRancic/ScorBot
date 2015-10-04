@@ -31,11 +31,15 @@ function varargout = ScorVer
 %               non-Windows 32-bit OS to install simulation tools. 
 %               Additional updates to fix bugs in simulation tools.
 %   01Oct2015 - Updates to ScorSim* error checking.
+%   04Oct2015 - Updates to include ScorSimSetGripper and ScorSimGetGripper
+%               functionality.
+%   05Oct2015 - Example and test SCRIPT update including update to
+%               ScorUpdate.
 
 A.Name = 'ScorBot Toolbox';
-A.Version = '2.2.3';
+A.Version = '2.2.4';
 A.Release = '(R2014a)';
-A.Date = '01-Oct-2015';
+A.Date = '05-Oct-2015';
 A.URLVer = 1;
 
 msg{1} = sprintf('MATLAB %s Version: %s %s',A.Name, A.Version, A.Release);
