@@ -4,12 +4,12 @@
 ScorInit; 
 ScorHome;
  
-%% Define joint positions in XYZPR
-XYZPRs(1,:) = [500.000,-200.000,570.000,0.000,0.000];
-XYZPRs(2,:) = [500.000, 200.000,570.000,0.000,0.000];
-XYZPRs(3,:) = [500.000, 200.000,270.000,0.000,0.000];
-XYZPRs(4,:) = [500.000,-200.000,270.000,0.000,0.000];
-XYZPRs(5,:) = XYZPRs(1,:);
+%% Define desired waypoints as end-point XYZPR positions/orientations
+XYZPRs(1,:) = [500.000,-200.000,570.000,0.000,-2*pi/2];
+XYZPRs(2,:) = [500.000, 200.000,570.000,0.000,-1*pi/2];
+XYZPRs(3,:) = [500.000, 200.000,270.000,0.000, 0*pi/2];
+XYZPRs(4,:) = [500.000,-200.000,270.000,0.000, 1*pi/2];
+XYZPRs(5,:) = [500.000,-200.000,570.000,0.000, 2*pi/2];
 
 %% Convert joint positions to BSEPR
 for i = 1:size(XYZPRs,1)
@@ -99,7 +99,6 @@ for i = 1:size(XYZPRs,1)
     [~] = ScorWaitForMove;
     toc(t)
 end
-
 
 %% Move through end-point positions (bsepr)
 h = []; % initialize variable for plot handle
