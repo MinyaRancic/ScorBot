@@ -194,6 +194,9 @@ function varargout = ScorWaitForMove(varargin)
 %   28Aug2015 - Updated error handling
 %   15Sep2015 - Added timeout to execute quick move, and execute regular
 %               move
+%   13Oct2015 - Bad property value identification in error
+%   20Oct2015 - Updated "quick move" to include a wait for the change in
+%               joint angles to drop below a threshold.
 
 % Known Issues
 %   15Sep2015 - Running ScorWaitForMove immediately following a
@@ -284,7 +287,7 @@ for i = 1:2:n
                     error('Unexpected property value for "%s".',varargin{i});
             end
         otherwise
-            error('Unexpected Property Name.');
+            error(sprintf('Unexpected Property Name "%s".',varargin{i}));
     end
 end
 
@@ -375,6 +378,15 @@ if ~posOn && ~jntOn && ~robOn && ~getData
     end
     if nargout > 2
         varargout{3} = CollectedData;
+    end
+    % Wait for move to actually complete
+    dq = inf(1,5);
+    q(1,:) = ScorGetBSEPR;
+    while norm(dq) > 1e-8
+        pause(0.05);
+        q(2,:) = ScorGetBSEPR;
+        dq = diff(q,1);
+        q(1,:) = q(2,:);
     end
     return
 end

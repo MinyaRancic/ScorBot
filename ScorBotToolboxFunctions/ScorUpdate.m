@@ -1,5 +1,5 @@
 function ScorUpdate
-% SCORUPDATE download an update the ScorBot Toolbox. 
+% SCORUPDATE download and update the ScorBot Toolbox. 
 %
 %   (c) M. Kutzer 26Aug2015, USNA
 
@@ -9,6 +9,7 @@ function ScorUpdate
 %   03Sep2015 - Updated to download from GitHub
 %   29Sep2015 - Updated to include simulation test and istall for operating
 %               systems outside of Windows 32-bit (for simulation only).
+%   04Oct2015 - Updated hardware and simulation test scripts.
 
 % TODO - Find a location for "ScorBotToolbox Example SCRIPTS"
 % TODO - update function for general operation
@@ -51,13 +52,16 @@ cd(pname_star);
 %% Install ScorBot Toolbox
 installScorBotToolbox(true);
 
-%% Test ScorBot functionality
+%% Test ScorBot hardware functionality
 if ispc
     switch computer
         case 'PCWIN'
-            SCRIPT_Basic_Test
+            SCRIPT_BasicHardwareTest;
     end
 end
+
+%% Test simulation functionality
+SCRIPT_BasicSimulationTest;
 
 %% Move back to current directory and remove temp file
 cd(cpath);
@@ -65,26 +69,6 @@ cd(cpath);
 if ~ok
     warning('Unable to remove temporary download folder. %s',msg);
 end
-
-%% Test simulation functionality
-fprintf('Testing simulation tools...'); 
-sim = ScorSimInit;
-ScorSimPatch(sim);
-lims = ScorBSEPRLimits;
-for i = 1:5
-    theta{i} = linspace(lims(i,1),lims(i,2),100);
-end
-
-for i = 1:5
-    BSEPR = [0,pi/2,-pi/2,0,0];
-    for j = 1:numel(theta{i})
-        BSEPR(i) = theta{i}(j);
-        ScorSimSetBSEPR(sim,BSEPR);
-        drawnow;
-    end
-end
-close(sim.Figure);
-fprintf('[Complete]\n');
 
 %% Complete installation
 fprintf('Installation complete.\n');

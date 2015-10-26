@@ -31,11 +31,19 @@ function varargout = ScorVer
 %               non-Windows 32-bit OS to install simulation tools. 
 %               Additional updates to fix bugs in simulation tools.
 %   01Oct2015 - Updates to ScorSim* error checking.
+%   04Oct2015 - Updates to include ScorSimSetGripper and ScorSimGetGripper
+%               functionality.
+%   05Oct2015 - Example and test SCRIPT update including update to
+%               ScorUpdate.
+%   14OCt2015 - Created ScorXYZPRJacobian function.
+%   23Oct2015 - Updates to ScorSim* to include XYZPR and BSEPR teach modes. 
+%   23Oct2015 - Update to ScorXYZPR2BSEPR to allow user to select between
+%               elbow-up and elbow-down solutions.
 
 A.Name = 'ScorBot Toolbox';
-A.Version = '2.2.3';
+A.Version = '2.2.5';
 A.Release = '(R2014a)';
-A.Date = '01-Oct-2015';
+A.Date = '23-Oct-2015';
 A.URLVer = 1;
 
 msg{1} = sprintf('MATLAB %s Version: %s %s',A.Name, A.Version, A.Release);
