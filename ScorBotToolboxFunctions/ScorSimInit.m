@@ -22,6 +22,7 @@ function scorSim = ScorSimInit(varargin)
 %   15Oct2015 - Updated to include global for keypress movements
 %   20Oct2015 - Updated to include teach indicator
 %   23Oct2015 - Updated field of view (xlim)
+%   01Nov2015 - Updated indicator axes to hide handle visibility
 
 %% Initialize output
 scorSim.Figure = [];
@@ -102,11 +103,16 @@ view([(-37.5+180),30]);
 set(scorSim.Figure,'WindowKeyPressFcn',@ScorSimTeachCallback);
 
 %% Setup Indicator Axes
+% Create indicator axes
 axs = axes('Parent',scorSim.Figure,'Position',[0.84,0.0,0.16,0.08],...
-           'xlim',[0,2],'ylim',[0,1],'Visible','Off');
+           'xlim',[0,2],'ylim',[0,1],'Visible','Off','HandleVisibility','off');
+% Create status flag
 scorSim.TeachFlag = patch([0,2,2,0,0],[0,0,1,1,0],'w');
 set(scorSim.TeachFlag,'FaceColor','w','EdgeColor','k','FaceAlpha',0.5,'Parent',axs);
+% Create status text
 scorSim.TeachText = text(1,0.5,sprintf('Inactive.'),...
     'VerticalAlignment','Middle',...
     'HorizontalAlignment','Center');
+set(scorSim.TeachText,'Parent',axs);
+% Set visibility
 set([scorSim.TeachFlag,scorSim.TeachText],'Visible','off');
