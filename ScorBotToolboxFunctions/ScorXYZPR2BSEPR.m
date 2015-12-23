@@ -48,16 +48,50 @@ function BSEPR = ScorXYZPR2BSEPR(varargin)
 %               Erik Hoss
 %   23Oct2015 - Updated to provide clearer solutions to elbow-up, and 
 %               elbow-down problem following inverse kinematic solution.
+%   23Dec2015 - Updated to clarify errors.
 
 % TODO - check special case configurations
 % TODO - account for additional "reach-back" solutions and clarify pitch. 
 
 %% Check inputs
-narginchk(1,2);
+% This assumes nargin is fixed to 1 or 3 with a set of common errors:
+%   e.g. ScorXYZPR2BSEPR(X,Y,Z,Pitch,Roll);
 
-XYZPR = varargin{1};
-if numel(XYZPR) ~= 5
-    error('Task vector must containt 5-elements.');
+% Check for zero inputs
+if nargin < 1
+    error('ScorX2Y:NoXYZPR',...
+        ['End-effector position and orientation must be specified.',...
+        '\n\t-> Use "ScorXYZPR2BSEPR(XYZPR)".']);
+end
+% Check XYZPR
+if nargin >= 1
+    XYZPR = varargin{1};
+    if ~isnumeric(XYZPR) || numel(XYZPR) ~= 5
+        error('ScorX2Y:BadXYZPR',...
+            ['End-effector position and orientation must be specified as a 5-element numeric array.',...
+            '\n\t-> Use "ScorXYZPR2BSEPR([X,Y,Z,Pitch,Roll])".']);
+    end
+end
+% Check property value
+if nargin >= 2
+    switch lower(varargin{2})
+        case 'elbowupsolution'
+            % Return elbow-up solution only
+        case 'elbowdownsolution'
+            % Return elbow-down solution only
+        case 'allsolutions'
+            % Return elbow-up solution
+        otherwise
+            error('ScorX2Y:BadPropVal',...
+                ['Unexpected property value: "%s".',...
+                '\n\t-> Use "ScorXYZPR2BSEPR(XYZPR,''ElbowUpSolution'')" or',...
+                '\n\t-> Use "ScorXYZPR2BSEPR(XYZPR,''ElbowDownSolution'')" or'...
+                '\n\t-> Use "ScorXYZPR2BSEPR(XYZPR,''AllSolutions'')".'],varargin{2});
+    end
+end
+% Check for too many inputs
+if nargin > 2
+    warning('Too many inputs specified. Ignoring additional parameters.');
 end
 
 %% Calculate BSEPR 

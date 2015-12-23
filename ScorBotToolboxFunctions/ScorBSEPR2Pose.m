@@ -1,4 +1,4 @@
-function H = ScorBSEPR2Pose(BSEPR)
+function H = ScorBSEPR2Pose(varargin)
 % SCORBSEPR2POSE calculate the forward kinematics of the ScorBot given the 
 % BSEPR joint parameters.
 %
@@ -22,5 +22,34 @@ function H = ScorBSEPR2Pose(BSEPR)
 %
 %   (c) M. Kutzer, 11Aug2015, USNA
 
+% Updates
+%   23Dec2015 - Updated to varargin to clarify errors.
+%   23Dec2015 - Updated to clarify errors.
+
+%% Check inputs
+% This assumes nargin is fixed to 1 with a set of common errors:
+%   e.g. ScorBSEPR2Pose(theta1,theta2,theta3,theta4,theta5);
+
+% Check for zero inputs
+if nargin < 1
+    error('ScorX2Y:NoBSEPR',...
+        ['Joint configuration must be specified.',...
+        '\n\t-> Use "ScorBSEPR2Pose(BSEPR)".']);
+end
+% Check BSEPR
+if nargin >= 1
+    BSEPR = varargin{1};
+    if ~isnumeric(BSEPR) || numel(BSEPR) ~= 5
+        error('ScorX2Y:BadBSEPR',...
+            ['Joint configuration must be specified as a 5-element numeric array.',...
+            '\n\t-> Use "ScorBSEPR2Pose([Joint1,Joint2,...,Joint5])".']);
+    end
+end
+% Check for too many inputs
+if nargin > 1
+    warning('Too many inputs specified. Ignoring additional parameters.');
+end
+
+%% Calculate pose
 DHtable = ScorDHtable(BSEPR);
 H = DHtableToFkin(DHtable);

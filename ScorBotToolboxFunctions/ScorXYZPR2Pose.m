@@ -30,12 +30,42 @@ function H = ScorXYZPR2Pose(varargin)
 %
 %   (c) M. Kutzer, 12Aug2015, USNA
 
-%% Check inputs
-narginchk(1,2);
+% Updates
+%   23Dec2015 - Updated to clarify errors.
 
-XYZPR = varargin{1};
-if numel(XYZPR) ~= 5
-    error('XYZPR must be a 5-element vector.');
+%% Check inputs
+% This assumes nargin is fixed to 1 or 3 with a set of common errors:
+%   e.g. ScorXYZPR2Pose(X,Y,Z,Pitch,Roll);
+
+% Check for zero inputs
+if nargin < 1
+    error('ScorX2Y:NoXYZPR',...
+        ['End-effector position and orientation must be specified.',...
+        '\n\t-> Use "ScorXYZPR2Pose(XYZPR)".']);
+end
+% Check XYZPR
+if nargin >= 1
+    XYZPR = varargin{1};
+    if ~isnumeric(XYZPR) || numel(XYZPR) ~= 5
+        error('ScorX2Y:BadXYZPR',...
+            ['End-effector position and orientation must be specified as a 5-element numeric array.',...
+            '\n\t-> Use "ScorXYZPR2Pose([X,Y,Z,Pitch,Roll])".']);
+    end
+end
+% Check property value
+if nargin >= 2
+    switch lower(varargin{2})
+        case 'allsolutions'
+            % Return all solutions
+        otherwise
+            error('ScorX2Y:BadPropVal',...
+                ['Unexpected property value: "%s".',...
+                '\n\t-> Use "ScorXYZPR2Pose(XYZPR,''AllSolutions'')".'],varargin{2});
+    end
+end
+% Check for too many inputs
+if nargin > 2
+    warning('Too many inputs specified. Ignoring additional parameters.');
 end
 
 %% Calculate end-effector pose (Solution 1)

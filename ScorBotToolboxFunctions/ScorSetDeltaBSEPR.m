@@ -33,32 +33,72 @@ function confirm = ScorSetDeltaBSEPR(varargin)
 %               Erik Hoss
 %   01Sep2015 - Added ScorIsReady to account for potential empty set error
 %               later in code (with ScorGetBSEPR)
+%   23Dec2015 - Updated to clarify errors.
 
 % TODO - account for excessive movements 
 %        (e.g. ScorSetDeltaBSEPR([0,-pi,0,0,0]);
+
+%% Check inputs
+% This assumes nargin is fixed to 1 or 3 with a set of common errors:
+%   e.g. ScorSetDeltaBSEPR(DeltaTheta1,DeltaTheta2,...,DeltaTheta5);
+
+% Check for zero inputs
+if nargin < 1
+    error('ScorSet:NoDeltaBSEPR',...
+        ['Change in joint configuration must be specified.',...
+        '\n\t-> Use "ScorSetDeltaBSEPR(DeltaBSEPR)".']);
+end
+% Check DeltaBSEPR
+if nargin >= 1
+    DeltaBSEPR = varargin{1};
+    if ~isnumeric(DeltaBSEPR) || numel(DeltaBSEPR) ~= 5
+        error('ScorSet:BadDeltaBSEPR',...
+            ['Change in joint configuration must be specified as a 5-element numeric array.',...
+            '\n\t-> Use "ScorSetDeltaBSEPR([DeltaJoint1,DeltaJoint2,...,DeltaJoint5])".']);
+    end
+end
+% Check property designator
+if nargin >= 2
+    pType = varargin{2};
+    if ~ischar(pType) || ~strcmpi('MoveType',pType)
+        error('ScorSet:BadPropDes',...
+            ['Unexpected property: "%s"',...
+            '\n\t-> Use "ScorSetDeltaBSEPR(DeltaBSEPR,''MoveType'',''LinearJoint'')" or',...
+            '\n\t-> Use "ScorSetDeltaBSEPR(DeltaBSEPR,''MoveType'',''LinearTask'')".'],pType);
+    end
+    if nargin < 3
+        error('ScorSet:NoPropVal',...
+            ['No property value for "%s" specified.',...
+            '\n\t-> Use "ScorSetDeltaBSEPR(DeltaBSEPR,''MoveType'',''LinearJoint'')" or',...
+            '\n\t-> Use "ScorSetDeltaBSEPR(DeltaBSEPR,''MoveType'',''LinearTask'')".'],pType);
+    end
+end
+% Check property value
+mType = 'LinearJoint';
+if nargin >= 3
+    mType = varargin{3};
+    switch lower(mType)
+        case 'linearjoint'
+            % Linear move in joint space
+        case 'lineartask'
+            % Linear move in task space
+        otherwise
+            error('ScorSet:BadPropVal',...
+                ['Unexpected property value: "%s".',...
+                '\n\t-> Use "ScorSetDeltaBSEPR(DeltaBSEPR,''MoveType'',''LinearJoint'')" or',...
+                '\n\t-> Use "ScorSetDeltaBSEPR(DeltaBSEPR,''MoveType'',''LinearTask'')".'],mType);
+    end
+end
+% Check for too many inputs
+if nargin > 3
+    warning('Too many inputs specified. Ignoring additional parameters.');
+end
 
 %% Check ScorBot
 isReady = ScorIsReady;
 if ~isReady
     confirm = false;
     return
-end
-
-%% Check inputs 
-narginchk(1,3);
-
-mType = 'LinearJoint'; 
-nInputs = nargin;
-if nInputs >= 3
-    if strcmpi('movetype',varargin{end-1})
-        mType = varargin{end};
-        nInputs = nInputs - 2;
-    else
-        error('Unrecognized property name.');
-    end
-end
-if nInputs == 1
-    DeltaBSEPR = varargin{1};
 end
 
 %% Move delta

@@ -14,21 +14,62 @@ function confirm = ScorSetPose(varargin)
 %
 %   (c) M. Kutzer, 14Aug2015, USNA
 
-%% Check inputs 
-narginchk(1,3);
+% Updates
+%   23Dec2015 - Updated to clarify errors.
 
-mType = 'LinearTask'; 
-nInputs = nargin;
-if nInputs >= 3
-    if strcmpi('movetype',varargin{end-1})
-        mType = varargin{end};
-        nInputs = nInputs - 2;
-    else
-        error('Unrecognized property name.');
+%% Check inputs
+% This assumes nargin is fixed to 1 or 3 with a set of common errors.
+
+% Check for zero inputs
+if nargin < 1
+    error('ScorSet:NoPose',...
+        ['End-effector pose must be specified.',...
+        '\n\t-> Use "ScorSetPose(H)".']);
+end
+% Check Pose
+if nargin >= 1
+    H = varargin{1};
+    if size(H,1) ~= 4 || size(H,2) ~= 4 || ~isSE(H)
+        error('ScorSet:BadPose',...
+            ['End-effector pose must be specified as a valid 4x4 element of SE(3).',...
+            '\n\t-> Use "ScorSetPose(H)".']);
     end
 end
-if nInputs == 1
-    H = varargin{1};
+% Check property designator
+if nargin >= 2
+    pType = varargin{2};
+    if ~ischar(pType) || ~strcmpi('MoveType',pType)
+        error('ScorSet:BadPropDes',...
+            ['Unexpected property: "%s"',...
+            '\n\t-> Use "ScorSetPose(H,''MoveType'',''LinearJoint'')" or',...
+            '\n\t-> Use "ScorSetPose(H,''MoveType'',''LinearTask'')".'],pType);
+    end
+    if nargin < 3
+        error('ScorSet:NoPropVal',...
+            ['No property value for "%s" specified.',...
+            '\n\t-> Use "ScorSetPose(H,''MoveType'',''LinearJoint'')" or',...
+            '\n\t-> Use "ScorSetPose(H,''MoveType'',''LinearTask'')".'],pType);
+    end
+end
+% Check property value
+mType = 'LinearJoint';
+if nargin >= 3
+    mType = varargin{3};
+    switch lower(mType)
+        case 'linearjoint'
+            % Linear move in joint space
+        case 'lineartask'
+            % Linear move in task space
+        otherwise
+            error('ScorSet:BadPropVal',...
+                ['Unexpected property value: "%s".',...
+                '\n\t-> Use "ScorSetPose(H,''MoveType'',''LinearJoint'')" or',...
+                '\n\t-> Use "ScorSetPose(H,''MoveType'',''LinearTask'')".'],mType);
+    end
+end
+% Check for too many inputs
+if nargin > 3
+    warning('Too many inputs specified. Ignoring additional parameters.');
 end
 
 %% Get XYZPR

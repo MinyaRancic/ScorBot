@@ -33,7 +33,42 @@ function BSEPR = ScorPose2BSEPR(varargin)
 %
 %   (c) M. Kutzer, 13Aug2015, USNA
 
-H = varargin{1};
+% Updates
+%   23Dec2015 - Updated to clarify errors.
+
+%% Check inputs
+% This assumes nargin is fixed to 1 or 2 with a set of common errors.
+
+% Check for zero inputs
+if nargin < 1
+    error('ScorX2Y:NoPose',...
+        ['End-effector pose must be specified.',...
+        '\n\t-> Use "ScorPose2BSEPR(H)".']);
+end
+% Check Pose
+if nargin >= 1
+    H = varargin{1};
+    if size(H,1) ~= 4 || size(H,2) ~= 4 || ~isSE(H)
+        error('ScorX2Y:BadPose',...
+            ['End-effector pose must be specified as a valid 4x4 element of SE(3).',...
+            '\n\t-> Use "ScorPose2BSEPR(H)".']);
+    end
+end
+% Check property value
+if nargin >= 2
+    switch lower(varargin{2})
+        case 'allsolutions'
+            % Return all solutions
+        otherwise
+            error('ScorX2Y:BadPropVal',...
+                ['Unexpected property value: "%s".',...
+                '\n\t-> Use "ScorPose2BSEPR(H,''AllSolutions'')".'],varargin{2});
+    end
+end
+% Check for too many inputs
+if nargin > 2
+    warning('Too many inputs specified. Ignoring additional parameters.');
+end
 
 %% Get DH parameters
 DHtable = ScorDHtable;
