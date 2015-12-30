@@ -1,7 +1,9 @@
-function ScorSimPatch(scorSim,varargin)
+function ScorSimPatch(varargin)
 % SCORSIMPATCH creates a patch object a visualization of the ScorBot
 %   SCORSIMPATCH(scorSim) creates a patch object a visualization of the 
 %   ScorBot.
+%
+%   See also ScorSimInit ScorSimTeachXYZPR ScorSimTeachBSEPR
 %
 %   (c) M. Kutzer & M. Vetere, 25Sep2015, USNA
 
@@ -11,12 +13,38 @@ function ScorSimPatch(scorSim,varargin)
 %   03Oct2015 - Updated to include gripper functionality
 %   16Oct2015 - Update to documentation
 %   23Oct2015 - Updates to status indicator
+%   30Dec2015 - Updates see also
+%   30Dec2015 - Updated error checking
 
 % TODO - finish documentation
 
-%% Error checking
+%% Check inputs
+% Check for zero inputs
 if nargin < 1
-    error('The simulation object must be specified. Use "ScorSimPatch(scorSim)".')
+    error('ScorSim:NoSimObj',...
+        ['A valid ScorSim object must be specified.',...
+        '\n\t-> Use "scorSim = ScorSimInit;" to create a ScorSim object',...
+        '\n\t-> and "%s(scorSim);" to execute this function.'],mfilename)
+end
+% Check scorSim
+if nargin >= 1
+    scorSim = varargin{1};
+    if ~isScorSim(scorSim)
+        if isempty(inputname(1))
+            txt = 'The specified input';
+        else
+            txt = sprintf('"%s"',inputname(1));
+        end
+        error('ScorSet:BadSimObj',...
+            ['%s is not a valid ScorSim object.',...
+            '\n\t-> Use "scorSim = ScorSimInit;" to create a ScorSim object',...
+            '\n\t-> and "%s(scorSim);" to execute this function.'],txt,mfilename);
+    end
+end
+% Check for too many inputs
+% TODO - use varargin to specify simple/complex and coarse/fine
+if nargin > 1
+    warning('Too many inputs specified. Ignoring additional parameters.');
 end
 
 %% Check scorSim

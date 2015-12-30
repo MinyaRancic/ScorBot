@@ -41,11 +41,17 @@ function varargout = ScorVer
 %               elbow-up and elbow-down solutions.
 %   23Dec2015 - Updates to XYZPR, BSEPR, and Pose input functions
 %               (excluding ScorSim*) to clarify errors.
+%   30Dec2015 - Added ScorSimSetDeltaPose
+%   30Dec2015 - Updates to ScorSim* to clarify errors.
+%   30Dec2015 - Updated ScorSimSet* to include "confirm" output
+
+% TODO - Update Scor* error checking to use "mfilename"
+% TODO - Update Scor* error checking to use "inputname(i)"
 
 A.Name = 'ScorBot Toolbox';
-A.Version = '2.2.6';
+A.Version = '2.2.7';
 A.Release = '(R2014a)';
-A.Date = '23-Dec-2015';
+A.Date = '30-Dec-2015';
 A.URLVer = 1;
 
 msg{1} = sprintf('MATLAB %s Version: %s %s',A.Name, A.Version, A.Release);

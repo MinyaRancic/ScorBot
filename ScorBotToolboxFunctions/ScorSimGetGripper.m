@@ -1,4 +1,4 @@
-function grip = ScorSimGetGripper(scorSim)
+function grip = ScorSimGetGripper(varargin)
 % SCORSIMGETGRIPPER get the gripper state of the ScorBot visualization as 
 % measured in millimeters above fully closed.
 %   grip = SCORSIMGETGRIPPER(scorSim) get the gripper state of the ScorBot
@@ -13,10 +13,34 @@ function grip = ScorSimGetGripper(scorSim)
 % Updates
 %   01Oct2015 - Updated to include error checking
 %   03Oct2015 - Updated to include gripper functionality
+%   30Dec2015 - Updated error checking
 
-%% Error checking
+%% Check inputs
+% Check for zero inputs
 if nargin < 1
-    error('The simulation object must be specified. Use "ScorSimGetGripper(scorSim)".')
+    error('ScorSim:NoSimObj',...
+        ['A valid ScorSim object must be specified.',...
+        '\n\t-> Use "scorSim = ScorSimInit;" to create a ScorSim object',...
+        '\n\t-> and "grip = %s(scorSim);" to execute this function.'],mfilename)
+end
+% Check scorSim
+if nargin >= 1
+    scorSim = varargin{1};
+    if ~isScorSim(scorSim)
+        if isempty(inputname(1))
+            txt = 'The specified input';
+        else
+            txt = sprintf('"%s"',inputname(1));
+        end
+        error('ScorSet:BadSimObj',...
+            ['%s is not a valid ScorSim object.',...
+            '\n\t-> Use "scorSim = ScorSimInit;" to create a ScorSim object',...
+            '\n\t-> and "grip = %s(scorSim);" to execute this function.'],txt,mfilename);
+    end
+end
+% Check for too many inputs
+if nargin > 1
+    warning('Too many inputs specified. Ignoring additional parameters.');
 end
 
 %% Get grip

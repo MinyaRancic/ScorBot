@@ -2,6 +2,8 @@ function scorSim = ScorSimInit(varargin)
 % SCORSIMINIT initializes a visualization of the ScorBot
 %   scorSim = SCORSIMINIT initializes a visualization of the ScorBot in a
 %   new figure window, and returns the scorSim structured array.
+%
+%   Properties:
 %       scorSim.Figure - figure handle of ScorBot visualization
 %       scorSim.Axes   - axes handle of ScorBot visualization
 %       scorSim.Joints - 1x5 array containing joint handles for ScorBot
@@ -10,9 +12,25 @@ function scorSim = ScorSimInit(varargin)
 %           joint angle)
 %       scorSim.Frames - 1x5 array containing reference frame handles for
 %           ScorBot (hgtransform objects with triad.m decendants)
+%       scorSim.Finger - 1x4 array containing reference frame handles for
+%           the ScorBot end-effector fingers (hgtransform objects)
+%       scorSim.FingerTip - 1x2 array containing reference frame handles 
+%           for the ScorBot end-effector fingertips (hgtransform objects)
+%       scorSim.TeachFlag - status update object, not for general use
+%       scorSim.TeachText - status update object, not for general use
 %
-%   See also ScorSimGoHome ScorSimSetBSEPR ScorSimGetBSEPR ScorSimSetXYZPR
-%       ScorSimGetXYZPR etc
+%   Example:
+%       %% Initialize ScorBot simulation
+%       scorSim = ScorSimInit;
+%
+%       %% Add patch elements to visualize ScorBot
+%       ScorSimPatch(scorSim);
+%
+%       %% Put the ScorBot simulation in XYZPR teach mode
+%       ScorSimTeachXYZPR(scorSim);
+%
+%   See also ScorSimPatch ScorSimGoHome ScorSimSetBSEPR ScorSimGetBSEPR 
+%            ScorSimSetXYZPR ScorSimGetXYZPR etc
 %
 %   (c) M. Kutzer, 13Aug2015, USNA
 
@@ -23,6 +41,16 @@ function scorSim = ScorSimInit(varargin)
 %   20Oct2015 - Updated to include teach indicator
 %   23Oct2015 - Updated field of view (xlim)
 %   01Nov2015 - Updated indicator axes to hide handle visibility
+%   29Dec2015 - Updated comments
+%   30Dec2015 - Updated see also
+%   30Dec2015 - Updated error checking
+%   30Dec2015 - Updated to add example
+
+%% Check inputs
+% Check for too many inputs
+if nargin > 0
+    warning('Too many inputs specified. Ignoring additional parameters.');
+end
 
 %% Initialize output
 scorSim.Figure = [];
@@ -31,19 +59,21 @@ scorSim.Joints = [];
 scorSim.Frames = [];
 
 %% Setup figure
+% Create new figure
 scorSim.Figure = figure;
+% Create axes in scorSim.Figure
 scorSim.Axes   = axes('Parent',scorSim.Figure);
-
+% Update figure properties
 set(scorSim.Figure,'Name','ScorBot Visualization','MenuBar','none',...
     'NumberTitle','off','ToolBar','Figure');
 set(scorSim.Figure,'Units','Normalized','Position',[0.30,0.25,0.40,0.60]);
 % Set tag to help confirm validity of global variable
 set(scorSim.Figure,'Tag','ScorBot Visualization Figure, Do Not Change');
-
+% Set axes limits
 set(scorSim.Axes,'XLim',[-700,700],'YLim',[-700,700],'ZLim',[-50,1000]);
 daspect([1 1 1]);
 hold on
-
+% Define axes labels
 xlabel(scorSim.Axes,'x (mm)');
 ylabel(scorSim.Axes,'y (mm)');
 zlabel(scorSim.Axes,'z (mm)');
@@ -80,24 +110,15 @@ for i = 1:n
     d(i) = hgtransform('Parent',f(i),...
         'Tag',sprintf('FingerTipFrame%d',i));
 end
-
+% Assign finger frames
 for i = 1:n
     scorSim.Finger(i) = g(i);
 end
-
+% Assign fingertip frames
 idx = [1,4];
 for i = 1:2
     scorSim.FingerTip(i) = d(idx(i));
 end
-
-%% Close gripper
-ScorSimSetGripper(scorSim,'Close');
-
-%% Home ScorSim
-ScorSimGoHome(scorSim);
-
-%% Set default view
-view([(-37.5+180),30]);
 
 %% Set callback function
 set(scorSim.Figure,'WindowKeyPressFcn',@ScorSimTeachCallback);
@@ -116,3 +137,12 @@ scorSim.TeachText = text(1,0.5,sprintf('Inactive.'),...
 set(scorSim.TeachText,'Parent',axs);
 % Set visibility
 set([scorSim.TeachFlag,scorSim.TeachText],'Visible','off');
+
+%% Close gripper
+ScorSimSetGripper(scorSim,'Close');
+
+%% Home ScorSim
+ScorSimGoHome(scorSim);
+
+%% Set default view (matches USNA MU111 setup)
+view([(-37.5+180),30]);
