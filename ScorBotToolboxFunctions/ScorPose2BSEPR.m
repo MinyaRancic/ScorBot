@@ -18,16 +18,14 @@ function BSEPR = ScorPose2BSEPR(varargin)
 %       H - 4x4 homogeneous transformation with distance parameters
 %           specified in millimeters
 %
-%   BSEPRs = SCORPOSE2BSEPR(H,'AllSolutions') calculates all possible 
-%   5-element BSEPR joint angle vectors (in radians) given a 4x4 
-%   homogeneous transformation representing the end-effector pose of 
-%   ScorBot. If no solution exists, an empty set is returned.
-%       BSEPRs - Nx5 (0 <= N <= 4) element array containing viable 
-%       solutions
-%           BSEPRs(1,:) - BSEPR solution 1
-%           BSEPRs(2,:) - BSEPR solution 2
-%           ...
-%           BSEPRs(N,:) - BSEPR solution N
+%   BSEPR = SCORPOSE2BSEPR(___,'ElbowUpSolution') returns only the 
+%   "elbow-up" solution. [Default]
+%
+%   BSEPR = SCORPOSE2BSEPR(___,'ElbowDownSolution') returns only the 
+%   "elbow-down" solution. 
+%
+%   BSEPRs = SCORPOSE2BSEPR(___,'AllSolutions') returns all possible 
+%   solutions (packaged in a cell array).
 %
 %   See also ScorIkin ScorBSEPR2Pose ScorFkin ScorDHtable DH DHtableToFkin
 %
@@ -35,6 +33,10 @@ function BSEPR = ScorPose2BSEPR(varargin)
 
 % Updates
 %   23Dec2015 - Updated to clarify errors.
+%   30Dec2015 - Updated to match ScorXYZPR2BSEPR functionality
+
+% TODO - select either an Nx5 or cell array output to match other ScorX2Y 
+% functions
 
 %% Check inputs
 % This assumes nargin is fixed to 1 or 2 with a set of common errors.
@@ -57,8 +59,12 @@ end
 % Check property value
 if nargin >= 2
     switch lower(varargin{2})
+        case 'elbowupsolution'
+            % Return elbow-up solution only
+        case 'elbowdownsolution'
+            % Return elbow-down solution only
         case 'allsolutions'
-            % Return all solutions
+            % Return elbow-up solution
         otherwise
             error('ScorX2Y:BadPropVal',...
                 ['Unexpected property value: "%s".',...
@@ -163,16 +169,23 @@ if ~isempty(BSEPR)
         BSEPR = BSEPR(1,:);
     else
         switch lower(varargin{2})
+            case 'elbowupsolution'
+                % Return elbow-up solution
+                BSEPR = BSEPR(1,:);
+            case 'elbowdownsolution'
+                % Return elbow-down solution
+                if size(BSEPR,1) > 1
+                    BSEPR = BSEPR(2,:);
+                else
+                    BSEPR = [];
+                end
             case 'allsolutions'
                 % Output all BSEPR solutions
-            case 'firstsolution'
-                % Output first BSEPR solution
-                BSEPR = BSEPR(1,:);
-            case 1
-                % Output first BSEPR solution
-                BSEPR = BSEPR(1,:);
-            case 2
-                % Output all BSEPR solutions
+                thetas = BSEPR;
+                clear BSEPR
+                for i = 1:size(thetas,1)
+                   BSEPR{i} = thetas(i,:);
+                end
             otherwise
                 error('Unexpected property value.');
         end

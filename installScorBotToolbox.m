@@ -22,6 +22,9 @@ function installScorBotToolbox(replaceExisting)
 %   26Aug2015 - Updated to include rehash of toolbox cache
 %   26Aug2015 - Updated to include drawnow before rehash of toolbox cache
 
+% TODO - Allow users to create a local version if admin rights are not
+% possible.
+
 %% Check inputs
 if nargin == 0
     replaceExisting = [];
@@ -109,7 +112,6 @@ else
             error('Unexpected response.');
     end
 end
-
 
 %% Check for 32-bit bin directory
 if fullInstall

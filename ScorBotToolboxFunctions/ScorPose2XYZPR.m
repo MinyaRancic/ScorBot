@@ -14,14 +14,8 @@ function XYZPR = ScorPose2XYZPR(varargin)
 %       H - 4x4 homogeneous transformation with distance parameters
 %           specified in millimeters
 %
-%   XYZPR = SCORPOSE2XYZPR(H,'AllSolutions') calculates two 5-element XYZPR 
-%   task space vectors (packaged in a cell array) given a 4x4 homogeneous 
-%   transformation. Each XYZPR returned represents a possible combination 
-%   parameters resulting in the same end-effector pose of ScorBot given two
-%   possible base joint angles offset by pi. If solutions are redundant,  
-%   the second solution is removed. 
-%       b(1) = atan2(XYZPR(2),XYZPR(1))
-%       b(2) = atan2(XYZPR(2),XYZPR(1)) + pi
+%   XYZPRs = SCORPOSE2XYZPR(___,'AllSolutions') returns all possible 
+%   solutions (packaged in a cell array).
 %
 %   See also ScorXYZPR2Pose ScorIkin ScorBSEPR2Pose
 %
@@ -29,6 +23,9 @@ function XYZPR = ScorPose2XYZPR(varargin)
 
 % Updates
 %   23Dec2015 - Updated to clarify errors.
+%   30Dec2015 - Updated to match ScorBSEPR2XYZPR update
+
+% TODO - Clarify multiple solutions
 
 %% Check inputs
 % This assumes nargin is fixed to 1 or 2 with a set of common errors.
@@ -72,27 +69,19 @@ if isempty(BSEPR)
     return
 end
 
-for i = 1:size(BSEPR,1)
-    XYZPR(i,:) = ScorBSEPR2XYZPR(BSEPR(i,:));
+for i = 1:numel(BSEPR)
+    XYZPR{i} = ScorBSEPR2XYZPR(BSEPR{i});
 end
 
 %% Package output
 if nargin == 1
     % Output first XYZPR solution
-    XYZPR = XYZPR(1,:);
+    XYZPR = XYZPR{1};
     return
 end
 
 switch lower(varargin{2})
     case 'allsolutions'
-        % Output all XYZPR solutions
-    case 'firstsolution'
-        % Output first XYZPR solution
-        XYZPR = XYZPR(1,:);
-    case 1
-        % Output first XYZPR solution
-        XYZPR = XYZPR(1,:);
-    case 2
         % Output all XYZPR solutions
     otherwise
         error('Unexpected property value.');

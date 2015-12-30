@@ -24,14 +24,14 @@ function BSEPR = ScorXYZPR2BSEPR(varargin)
 %   XYZPR. BSEPR pitch angle is body-fixed while the pitch angle of XYZPR 
 %   is calculated relative to the base.
 %
-%   H = SCORXYZPR2BSEPR(___,'ElbowUpSolution') returns only the "elbow-up"
-%   solution. [Default]
+%   BSEPR = SCORXYZPR2BSEPR(___,'ElbowUpSolution') returns only the 
+%   "elbow-up" solution. [Default]
 %
-%   H = SCORXYZPR2BSEPR(___,'ElbowDownSolution') returns only the 
+%   BSEPR = SCORXYZPR2BSEPR(___,'ElbowDownSolution') returns only the 
 %   "elbow-down" solution. 
 %
-%   H = SCORXYZPR2BSEPR(___,'AllSolutions') returns all possible solutions 
-%   (packaged in a cell array).
+%   BSEPRs = SCORXYZPR2BSEPR(___,'AllSolutions') returns all possible 
+%   solutions (packaged in a cell array).
 %
 %   See also ScorGetBSEPR ScorSetXYZPR
 %
@@ -49,9 +49,12 @@ function BSEPR = ScorXYZPR2BSEPR(varargin)
 %   23Oct2015 - Updated to provide clearer solutions to elbow-up, and 
 %               elbow-down problem following inverse kinematic solution.
 %   23Dec2015 - Updated to clarify errors.
+%   30Dec2015 - Corrected help documentation.
 
 % TODO - check special case configurations
 % TODO - account for additional "reach-back" solutions and clarify pitch. 
+% TODO - select either an Nx5 or cell array output to match other ScorX2Y 
+% functions
 
 %% Check inputs
 % This assumes nargin is fixed to 1 or 3 with a set of common errors:
@@ -248,10 +251,8 @@ switch lower(varargin{2})
     case 'allsolutions'
         % Return elbow-up solution
         BSEPR{1} = transpose( theta(:,2) );
-        BSEPR{2} = transpose( theta(:,1) );
         % Return elbow-down solution
-        %BSEPR{3} = transpose( theta(:,4) );
-        %BSEPR{4} = transpose( theta(:,3) );
+        BSEPR{2} = transpose( theta(:,1) );
     otherwise
         error('Unexpected property value.');
 end
