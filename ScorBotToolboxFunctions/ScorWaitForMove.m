@@ -295,7 +295,7 @@ end
 
 %% Execute quick move when no data or plots are required
 iter = 0; % set default value
-showProgress = true; % set default value
+showProgress = false; % set default value
 if ~posOn && ~jntOn && ~robOn && ~getData
     % Show progress in command window if no outputs are declared
     if nargout == 0
