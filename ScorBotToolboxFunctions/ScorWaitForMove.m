@@ -197,6 +197,7 @@ function varargout = ScorWaitForMove(varargin)
 %   13Oct2015 - Bad property value identification in error
 %   20Oct2015 - Updated "quick move" to include a wait for the change in
 %               joint angles to drop below a threshold.
+%   08Jan2016 - Error fix to set general "showProgress" default
 
 % Known Issues
 %   15Sep2015 - Running ScorWaitForMove immediately following a
@@ -291,7 +292,8 @@ for i = 1:2:n
     end
 end
 
-%% Execute quick move when no data or plots are required 
+%% Execute quick move when no data or plots are required
+showProgress = true; % set default value
 if ~posOn && ~jntOn && ~robOn && ~getData
     % Show progress in command window if no outputs are declared
     if nargout == 0
