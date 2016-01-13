@@ -5,6 +5,10 @@ function bin= isSkewSymmetric(M)
 %
 %   (c) M. Kutzer 10Oct2014, USNA
 
+% Updates
+%   13Jan2016 - Updated to correct check term and reduce constraint on
+%       zero.
+
 %% Check dimensions of M
 if size(M,1) ~= size(M,2) || ~ismatrix(M)
     error('"M" must be a square matrix.');
@@ -16,7 +20,7 @@ end
 %% Check for skew-symmetric
 bin = true; % assume skew-symmetric matrix
 
-chk = zeroFPError( sum(sum( abs(M + transpose(M)) )) );
+chk = zeroFPError( sum(sum( abs(M + transpose(M)) )), 1e-10 );
 try
     % Check if term contains any symbolic variables
     logical(chk);
