@@ -16,7 +16,7 @@ end
 %% Check for skew-symmetric
 bin = true; % assume skew-symmetric matrix
 
-chk = zeroFPError( sum(sum(M + transpose(M))) );
+chk = zeroFPError( sum(sum( abs(M + transpose(M)) )) );
 try
     % Check if term contains any symbolic variables
     logical(chk);
