@@ -145,6 +145,7 @@ if isToolbox == 7
             if libisloaded('RobotDll')
                 unloadlibrary('RobotDll');
             end
+            rmpath(toolboxRoot);
             [isRemoved, msg, msgID] = rmdir(toolboxRoot,'s');
             if isRemoved
                 fprintf('Previous version of ScorBot Toolbox removed successfully.\n');
