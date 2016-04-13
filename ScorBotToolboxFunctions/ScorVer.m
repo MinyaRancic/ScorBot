@@ -51,15 +51,16 @@ function varargout = ScorVer
 %       functions to calculate the offset between the end-effector frame 
 %       and the tip of the gripper.
 %   27Feb2016 - Breakout into multiple toolboxes
+%   13Apr2016 - Added initial UDP send/receive functionality
 
 % TODO - Migrate affine transform tools into more descriptive folder
 % TODO - Update Scor* error checking to use "mfilename"
 % TODO - Update Scor* error checking to use "inputname(i)"
 
 A.Name = 'ScorBot Toolbox';
-A.Version = '3.0.0';
+A.Version = '3.1.0';
 A.Release = '(R2014a)';
-A.Date = '27-Feb-2016';
+A.Date = '13-Apr-2016';
 A.URLVer = 1;
 
 msg{1} = sprintf('MATLAB %s Version: %s %s',A.Name, A.Version, A.Release);
