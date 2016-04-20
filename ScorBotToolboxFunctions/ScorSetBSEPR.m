@@ -36,6 +36,9 @@ function confirm = ScorSetBSEPR(varargin)
 %               successful move when no move occurs.
 %   23Dec2015 - Updated to clarify errors.
 
+%% Set global for ScorSetUndo
+global ScorSetUndoBSEPR
+
 %% Check inputs
 % This assumes nargin is fixed to 1 or 3 with a set of common errors:
 %   e.g. ScorSetBSEPR(theta1,theta2,theta3,theta4,theta5);
@@ -107,6 +110,10 @@ if BSEPR(3) > 0
     confirm = false;
     return
 end
+
+%% Set the ScorSetUndo waypoint
+% TODO - add error checking
+ScorSetUndoBSEPR = ScorGetBSEPR;
 
 %% Convert BSEPR to XYZPR
 % NOTE: This library is currently unable to access direct control over

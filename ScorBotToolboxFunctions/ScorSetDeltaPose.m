@@ -18,6 +18,9 @@ function confirm = ScorSetDeltaPose(varargin)
 % Updates
 %   23Dec2015 - Updated to clarify errors.
 
+%% Set global for ScorSetUndo
+global ScorSetUndoBSEPR
+
 %% Check inputs
 % This assumes nargin is fixed to 1 or 3 with a set of common errors.
 
@@ -78,6 +81,10 @@ H_cur = ScorGetPose;
 
 %% Calculate absolute pose
 H = H_cur*H_rel;
+
+%% Set the ScorSetUndo waypoint
+% TODO - add error checking
+ScorSetUndoBSEPR = ScorGetBSEPR;
 
 %% Move to pose
 confirm = ScorSetPose(H,'MoveType',mType);

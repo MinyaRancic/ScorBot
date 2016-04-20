@@ -18,6 +18,9 @@ function confirm = ScorSetPose(varargin)
 %   23Dec2015 - Updated to clarify errors.
 %   30Dec2015 - Updated help documentation
 
+%% Set global for ScorSetUndo
+global ScorSetUndoBSEPR
+
 %% Check inputs
 % This assumes nargin is fixed to 1 or 3 with a set of common errors.
 
@@ -81,4 +84,9 @@ if isempty(XYZPR)
     return
 end
 
+%% Set the ScorSetUndo waypoint
+% TODO - add error checking
+ScorSetUndoBSEPR = ScorGetBSEPR;
+
+%% Move Arm
 confirm = ScorSetXYZPR(XYZPR,'MoveType',mType);

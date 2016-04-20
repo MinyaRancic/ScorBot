@@ -38,6 +38,9 @@ function confirm = ScorSetDeltaBSEPR(varargin)
 % TODO - account for excessive movements 
 %        (e.g. ScorSetDeltaBSEPR([0,-pi,0,0,0]);
 
+%% Set global for ScorSetUndo
+global ScorSetUndoBSEPR
+
 %% Check inputs
 % This assumes nargin is fixed to 1 or 3 with a set of common errors:
 %   e.g. ScorSetDeltaBSEPR(DeltaTheta1,DeltaTheta2,...,DeltaTheta5);
@@ -114,5 +117,10 @@ if BSEPR_New(3) > 0
 end
 XYZPR_New = ScorBSEPR2XYZPR(BSEPR_New);
 
+%% Set the ScorSetUndo waypoint
+% TODO - add error checking
+ScorSetUndoBSEPR = ScorGetBSEPR;
+
+%% Move arm
 DeltaXYZPR = XYZPR_New - XYZPR_Old;
 confirm = ScorSetDeltaXYZPR(DeltaXYZPR,'MoveType',mType);

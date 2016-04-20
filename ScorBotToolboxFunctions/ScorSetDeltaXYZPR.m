@@ -34,6 +34,9 @@ function confirm = ScorSetDeltaXYZPR(varargin)
 %   28Aug2015 - Updated error handling
 %   23Dec2015 - Updated to clarify errors.
 
+%% Set global for ScorSetUndo
+global ScorSetUndoBSEPR
+
 %% Check inputs
 % This assumes nargin is fixed to 1 or 3 with a set of common errors:
 %   e.g. ScorSetDeltaXYZPR(DeltaX,DeltaY,...,DeltaRoll);
@@ -96,6 +99,10 @@ if ~isSet
     confirm = false;
     return
 end
+
+%% Set the ScorSetUndo waypoint
+% TODO - add error checking
+ScorSetUndoBSEPR = ScorGetBSEPR;
 
 %% Goto point
 isMove = ScorGotoPoint('MoveType',mType);
