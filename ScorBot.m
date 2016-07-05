@@ -1,12 +1,13 @@
 classdef ScorBot < matlab.mixin.SetGet
     properties(GetAccess = 'public', SetAccess = 'public')
+        MoveTime;
+        MoveType;
         BSEPR;       %Joint angles
         XYZPR;       %Task Space
         Pose;        %Task Space (SE3)
         Gripper;
         Speed;
-        MoveTime;
-        MoveType;
+
     end
     methods(Access = 'public')
         function obj = ScorBot
