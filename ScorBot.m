@@ -1,22 +1,14 @@
-classdef ScorBot
+classdef ScorBot < matlab.mixin.SetGet
     properties(GetAccess = 'public', SetAccess = 'public')
-<<<<<<< HEAD
-        BSEPR = ScorGetBSEPR;       %Joint angles
-        XYZPR = ScorGetXYZPR;       %Task Space
-        Pose = ScorGetPose;        %Task Space (SE3)
-        Gripper = ScorGetGripper;
-        Speed = ScorGetSpeed;
-=======
-        BSEPR       %Joint angles
-        XYZPR       %Task Space
-        Pose        %Task Space (SE3)
-        Gripper
-        Speed
->>>>>>> origin/master
+        BSEPR;       %Joint angles
+        XYZPR;       %Task Space
+        Pose;        %Task Space (SE3)
+        Gripper;
+        Speed;
     end
     methods(Access = 'public')
         function obj = ScorBot
-            obj = ScorInit;
+            ScorInit;
             ScorHome;
         end
         
@@ -31,7 +23,24 @@ classdef ScorBot
     %    end
     
     methods
-        function get(obj, 'BSEPR')
-            BSEPR = ScorGetBSEPR;
+        function BSEPR = ScorGetBSEPR(obj)
+            BSEPR = obj.ScorGetBSEPR;
         end
+        
+        function XYZPR = ScorGetXYZPR(obj)
+            XYZPR = obj.ScorGetXYZPR;
+        end
+        
+        function Pose = ScorGetPose(obj)
+            Pose = obj.ScorGetPose;
+        end
+        
+        function Gripper = ScorGetGripper(obj)
+            Gripper = obj.ScorGetGripper;
+        end
+        
+        function Speed = ScorGetSpeed(obj)
+            Speed = obj.ScorGetSpeed;
+        end
+    end
 end
