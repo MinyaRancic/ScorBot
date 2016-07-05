@@ -1,20 +1,25 @@
 classdef ScorBot
     properties(GetAccess = 'public', SetAccess = 'public')
-        BSEPR       %Joint angles
-            ScorGetBSEPR;
-            ScorSetBSEPR;
-        XYZPR       %Task Space
-        Pose        %Task Space (SE3)
-        Gripper
-        Speed
+        BSEPR = ScorGetBSEPR;       %Joint angles
+        XYZPR = ScorGetXYZPR;       %Task Space
+        Pose = ScorGetPose;        %Task Space (SE3)
+        Gripper = ScorGetGripper;
+        Speed = ScorGetSpeed;
     end
     methods(Access = 'public')
         function obj = ScorBot
-            ScorInit;
+            obj = ScorInit;
             ScorHome;
         end
-        function delete obj
+        
+        function delete(obj)
             ScorSafeShutdown;
-        end
+        end            
     end
+    
+    methods
+        function BSEPR = get.BSEPR(obj)
+            BSEPR = ScorGetBSEPR(obj);
+        end
+    
 end
