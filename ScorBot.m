@@ -19,10 +19,25 @@ classdef ScorBot < matlab.mixin.SetGet
     end
     
     methods
-       function BSEPR = get.BSEPR(obj)
+        function BSEPR = get.BSEPR(obj)
            BSEPR = ScorGetBSEPR;
-       end   
-
+        end   
+       
+        function XYZPR = ScorGetXYZPR(obj)
+            XYZPR = obj.ScorGetXYZPR;
+        end
+        
+        function Pose = ScorGetPose(obj)
+            Pose = obj.ScorGetPose;
+        end
+        
+        function Gripper = ScorGetGripper(obj)
+            Gripper = obj.ScorGetGripper;
+        end
+        
+        function Speed = ScorGetSpeed(obj)
+            Speed = obj.ScorGetSpeed;
+        end
 
     end
 end
