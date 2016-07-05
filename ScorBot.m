@@ -41,27 +41,27 @@ classdef ScorBot < matlab.mixin.SetGet
             Speed = obj.ScorGetSpeed;
         end
         
-        function set.BSEPR(obj, value)
+        function obj = set.BSEPR(obj, value)
             obj.BSEPR = value;
             ScorSetBSEPR(value, 'MoveType', obj.MoveType);
         end
         
-        function set.XYZPR(obj, value)
+        function obj = set.XYZPR(obj, value)
             obj.XYZPR = value;
             ScorSetXYZPR(value, 'MoveType', obj.MoveType);
         end
         
-        function set.Pose(obj, value)
+        function obj = set.Pose(obj, value)
             obj.Pose = value;
             ScorSetPose(value);
         end
         
-        function set.Gripper(obj, value)
+        function obj = set.Gripper(obj, value)
             obj.Gripper = value;
             ScorSetGripper(value);
         end
         
-        function set.Speed(obj, value)
+        function obj = set.Speed(obj, value)
             obj.Speed = value;
             ScorSetSpeed(value);
         end

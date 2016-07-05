@@ -34,6 +34,7 @@ classdef ScorBot < matlab.mixin.SetGet
             Gripper = obj.ScorGetGripper;
         end
         
+<<<<<<< HEAD
         function Speed = get.Speed(obj)
             Speed = obj.ScorGetSpeed;
         end
@@ -64,5 +65,28 @@ classdef ScorBot < matlab.mixin.SetGet
         end
         
         
+=======
+        function Speed = ScorGetSpeed(obj)
+            Speed = obj.ScorGetSpeed;
+        end
+        
+        function obj = set.BSEPR(obj, value)
+            obj.BSEPR = value;
+        end
+        
+        function obj = set.XYZPR(obj, value)
+            obj.XYZPR = value;
+        end
+        
+        function obj = set.Pose(obj, value)
+            obj.Pose = value;
+        end
+        
+        function obj = set.Gripper(obj, value)
+            obj.Gripper = value;
+        end
+        
+        function 
+>>>>>>> parent of 453fa51... Change Set Methods to Work For Handle Class
     end
 end
