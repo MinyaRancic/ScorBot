@@ -1,4 +1,10 @@
 classdef ScorBot
+    properties(GetAccess = 'public', SetAccess = 'public')
+        BSEPR       %Joint angles
+        XYZPR       %Task Space
+        Pose        %Task Space (SE3)
+        Gripper
+        Speed
     methods(Access = 'public')
         function obj = ScorBot
             ScorInit;
