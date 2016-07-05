@@ -1,6 +1,8 @@
 classdef ScorBot
     properties(GetAccess = 'public', SetAccess = 'public')
         BSEPR       %Joint angles
+            ScorGetBSEPR;
+            ScorSetBSEPR;
         XYZPR       %Task Space
         Pose        %Task Space (SE3)
         Gripper
