@@ -7,10 +7,7 @@ classdef ScorBot < matlab.mixin.SetGet
         Pose;        %Task Space (SE3)
         Gripper;
         Speed;
-<<<<<<< HEAD
 
-=======
->>>>>>> parent of cf59648... Fixed Setters
     end
     methods(Access = 'public')
         function obj = ScorBot
@@ -46,22 +43,45 @@ classdef ScorBot < matlab.mixin.SetGet
         
         function obj = set.BSEPR(obj, value)
             obj.BSEPR = value;
+            ScorSetBSEPR(value, 'MoveType', obj.MoveType);
         end
         
         function obj = set.XYZPR(obj, value)
             obj.XYZPR = value;
+            ScorSetXYZPR(value, 'MoveType', obj.MoveType);
         end
         
         function obj = set.Pose(obj, value)
             obj.Pose = value;
+            ScorSetPose(value);
         end
         
         function obj = set.Gripper(obj, value)
             obj.Gripper = value;
+            ScorSetGripper(value);
         end
         
         function obj = set.Speed(obj, value)
             obj.Speed = value;
+            ScorSetSpeed(value);
         end
+        
+        function set.MoveTime(obj, value)
+            obj.MoveTime = value;
+            ScorSetMoveTime(value);
+        end
+        
+        function set.MoveType(obj, value)
+            switch(value)
+                case 'LinearJoint'
+                    obj.MoveType = 'LinearJoint';
+                case 'LinearTask'
+                    obj.MoveType = 'LinearTask';
+                otherwise
+                    error('Move Type must be LinearTask or LinearJoint');
+                    
+            end
+        end
+        
     end
 end
