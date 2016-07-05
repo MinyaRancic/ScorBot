@@ -34,7 +34,7 @@ classdef ScorBot < matlab.mixin.SetGet
             Gripper = obj.ScorGetGripper;
         end
         
-        function Speed = ScorGetSpeed(obj)
+        function Speed = get.Speed(obj)
             Speed = obj.ScorGetSpeed;
         end
     end
