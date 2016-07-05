@@ -1,9 +1,0 @@
-classdef ScorBot
-    properties(GetAccess = 'public'
-    methods(Access = 'public')
-        function obj = ScorBot
-            ScorInit;
-            ScorHome;
-        end
-        
-end
