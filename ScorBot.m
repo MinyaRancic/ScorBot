@@ -5,6 +5,7 @@ classdef ScorBot
         Pose        %Task Space (SE3)
         Gripper
         Speed
+    end
     methods(Access = 'public')
         function obj = ScorBot
             ScorInit;
@@ -13,5 +14,5 @@ classdef ScorBot
         function delete obj
             ScorSafeShutdown;
         end
-          
+    end
 end
