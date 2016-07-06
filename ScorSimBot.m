@@ -1,5 +1,5 @@
-%classdef ScorBot < matlab.mixin.SetGet
-classdef ScorBot < hgsetget
+%classdef ScorSimBot < matlab.mixin.SetGet
+classdef ScorSimBot < hgsetget
     properties(GetAccess = 'public', SetAccess = 'public')
         MoveTime
         MoveType
@@ -11,10 +11,10 @@ classdef ScorBot < hgsetget
     end
     
     methods(Access = 'public')
-        function obj = ScorBot
-            ScorInit;
-            ScorHome;
-            initialize(obj);
+        function obj = ScorSimBot
+            ScorSimInit;
+            ScorSimHome;
+            Siminitialize(obj);
         end
         
         function delete(obj)
@@ -22,13 +22,13 @@ classdef ScorBot < hgsetget
             delete(obj);
         end
         
-        function initialize(obj)
-            obj.MoveTime = ScorGetMoveTime;
+        function Siminitialize(obj)
+            obj.MoveTime = ScorSimGetMoveTime;
             obj.MoveType = 'LinearJoint';
-            obj.BSEPR = ScorGetBSEPR;
-            obj.XYZPR = ScorGetXYZPR;
-            obj.Pose = ScorGetPose;
-            obj.Gripper = ScorGetGripper;
+            obj.BSEPR = ScorSimGetBSEPR;
+            obj.XYZPR = ScorSimGetXYZPR;
+            obj.Pose = ScorSimGetPose;
+            obj.Gripper = ScorSimSimGetGripper;
             obj.Speed = ScorGetSpeed;
         end
     end
@@ -36,53 +36,53 @@ classdef ScorBot < hgsetget
     methods
         function BSEPR = get.BSEPR(obj)
             disp('TEST')
-            BSEPR = ScorGetBSEPR;
+            BSEPR = ScorSimGetBSEPR;
         end
         
         function XYZPR = get.XYZPR(obj)
-            XYZPR = ScorGetXYZPR;
+            XYZPR = ScorSimGetXYZPR;
         end
         
         function Pose = get.Pose(obj)
-            Pose = ScorGetPose;
+            Pose = ScorSimGetPose;
         end
         
         function Gripper = get.Gripper(obj)
-            Gripper = ScorGetGripper;
+            Gripper = ScorSimGetGripper;
         end
         
         function Speed = get.Speed(obj)
-            Speed = ScorGetSpeed;
+            Speed = ScorSimGetSpeed;
         end
         
         function obj = set.BSEPR(obj, value)
             obj.BSEPR = value;
-            ScorSetBSEPR(value, 'MoveType', obj.MoveType);
+            ScorSimSetBSEPR(value, 'MoveType', obj.MoveType);
         end
         
         function obj = set.XYZPR(obj, value)
             obj.XYZPR = value;
-            ScorSetXYZPR(value, 'MoveType', obj.MoveType);
+            ScorSimSetXYZPR(value, 'MoveType', obj.MoveType);
         end
         
         function obj = set.Pose(obj, value)
             obj.Pose = value;
-            ScorSetPose(value);
+            ScorSimSetPose(value);
         end
         
         function obj = set.Gripper(obj, value)
             obj.Gripper = value;
-            ScorSetGripper(value);
+            ScorSimSetGripper(value);
         end
         
         function obj = set.Speed(obj, value)
             obj.Speed = value;
-            ScorSetSpeed(value);
+            ScorSimSetSpeed(value);
         end
         
         function obj = set.MoveTime(obj, value)
             obj.MoveTime = value;
-            ScorSetMoveTime(value);
+            ScorSimSetMoveTime(value);
         end
         
         function obj = set.MoveType(obj, value)
