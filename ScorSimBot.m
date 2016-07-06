@@ -55,37 +55,37 @@ classdef ScorSimBot < hgsetget
             Speed = ScorSimGetSpeed;
         end
         
-        function obj = set.BSEPR(obj, value)
+        function set.BSEPR(obj, value)
             obj.BSEPR = value;
             ScorSimSetBSEPR(value, 'MoveType', obj.MoveType);
         end
         
-        function obj = set.XYZPR(obj, value)
+        function set.XYZPR(obj, value)
             obj.XYZPR = value;
             ScorSimSetXYZPR(value, 'MoveType', obj.MoveType);
         end
         
-        function obj = set.Pose(obj, value)
+        function set.Pose(obj, value)
             obj.Pose = value;
             ScorSimSetPose(value);
         end
         
-        function obj = set.Gripper(obj, value)
+        function set.Gripper(obj, value)
             obj.Gripper = value;
             ScorSimSetGripper(value);
         end
         
-        function obj = set.Speed(obj, value)
+        function set.Speed(obj, value)
             obj.Speed = value;
             ScorSimSetSpeed(value);
         end
         
-        function obj = set.MoveTime(obj, value)
+        function set.MoveTime(obj, value)
             obj.MoveTime = value;
             ScorSimSetMoveTime(value);
         end
         
-        function obj = set.MoveType(obj, value)
+        function set.MoveType(obj, value)
             switch(value)
                 case 'LinearJoint'
                     obj.MoveType = 'LinearJoint';
