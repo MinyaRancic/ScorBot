@@ -1,44 +1,54 @@
-classdef ScorBot < matlab.mixin.SetGet
+%classdef ScorBot < matlab.mixin.SetGet
+classdef ScorBot < hgsetget
     properties(GetAccess = 'public', SetAccess = 'public')
-        MoveTime;
-        MoveType;
-        BSEPR;       %Joint angles
-        XYZPR;       %Task Space
-        Pose;        %Task Space (SE3)
-        Gripper;
-        Speed;
-
+        MoveTime
+        MoveType
+        BSEPR       %Joint angles
+        XYZPR       %Task Space
+        Pose        %Task Space (SE3)
+        Gripper
+        Speed
     end
+    
     methods(Access = 'public')
         function obj = ScorBot
             ScorInit;
             ScorHome;
+            MoveTime = ScorGetMoveTime;
+            MoveType = 'LinearJoint';
+            BSEPR = ScorGetBSEPR;
+            XYZPR = ScorGetXYZPR;
+            Pose = ScorGetPose;
+            Gripper = ScorGetGripper;
+            Speed = ScorGetSpeed;
         end
         
         function delete(obj)
             ScorSafeShutdown;
+            delete(obj);
         end            
     end
     
     methods
         function BSEPR = get.BSEPR(obj)
-            BSEPR = obj.ScorGetBSEPR;
+            disp('TEST')
+            BSEPR = ScorGetBSEPR;
         end
         
         function XYZPR = get.XYZPR(obj)
-            XYZPR = obj.ScorGetXYZPR;
+            XYZPR = ScorGetXYZPR;
         end
         
         function Pose = get.Pose(obj)
-            Pose = obj.ScorGetPose;
+            Pose = ScorGetPose;
         end
         
         function Gripper = get.Gripper(obj)
-            Gripper = obj.ScorGetGripper;
+            Gripper = ScorGetGripper;
         end
         
         function Speed = get.Speed(obj)
-            Speed = obj.ScorGetSpeed;
+            Speed = ScorGetSpeed;
         end
         
         function obj = set.BSEPR(obj, value)
@@ -66,20 +76,19 @@ classdef ScorBot < matlab.mixin.SetGet
             ScorSetSpeed(value);
         end
         
-        function set.MoveTime(obj, value)
+        function obj = set.MoveTime(obj, value)
             obj.MoveTime = value;
             ScorSetMoveTime(value);
         end
         
-        function set.MoveType(obj, value)
+        function obj = set.MoveType(obj, value)
             switch(value)
                 case 'LinearJoint'
                     obj.MoveType = 'LinearJoint';
                 case 'LinearTask'
                     obj.MoveType = 'LinearTask';
                 otherwise
-                    error('Move Type must be LinearTask or LinearJoint');
-                    
+                    error('Move Type must be LinearTask or LinearJoint');   
             end
         end
         
