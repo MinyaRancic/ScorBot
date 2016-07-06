@@ -14,6 +14,15 @@ classdef ScorBot < hgsetget
         function obj = ScorBot
             ScorInit;
             ScorHome;
+            initialize(obj);
+        end
+        
+        function delete(obj)
+            ScorSafeShutdown;
+            delete(obj);
+        end
+        
+        function initialize(obj)
             MoveTime = ScorGetMoveTime;
             MoveType = 'LinearJoint';
             BSEPR = ScorGetBSEPR;
@@ -22,11 +31,6 @@ classdef ScorBot < hgsetget
             Gripper = ScorGetGripper;
             Speed = ScorGetSpeed;
         end
-        
-        function delete(obj)
-            ScorSafeShutdown;
-            delete(obj);
-        end            
     end
     
     methods
