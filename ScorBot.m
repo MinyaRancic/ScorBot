@@ -23,13 +23,13 @@ classdef ScorBot < hgsetget
         end
         
         function initialize(obj)
-            MoveTime = ScorGetMoveTime;
-            MoveType = 'LinearJoint';
-            BSEPR = ScorGetBSEPR;
-            XYZPR = ScorGetXYZPR;
-            Pose = ScorGetPose;
-            Gripper = ScorGetGripper;
-            Speed = ScorGetSpeed;
+            obj.MoveTime = ScorGetMoveTime;
+            obj.MoveType = 'LinearJoint';
+            obj.BSEPR = ScorGetBSEPR;
+            obj.XYZPR = ScorGetXYZPR;
+            obj.Pose = ScorGetPose;
+            obj.Gripper = ScorGetGripper;
+            obj.Speed = ScorGetSpeed;
         end
     end
     
