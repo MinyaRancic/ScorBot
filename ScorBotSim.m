@@ -1,5 +1,5 @@
-classdef ScorSimBot < matlab.mixin.SetGet
-%classdef ScorSimBot < hgsetget
+classdef ScorBotSim < matlab.mixin.SetGet
+%classdef ScorBotSim < hgsetget
     properties(GetAccess = 'public', SetAccess = 'public')
         %MoveTime
         %MoveType
@@ -12,15 +12,14 @@ classdef ScorSimBot < matlab.mixin.SetGet
         DeltaBSEPR
         DeltaXYZPR
         DeltaPose
-        UBSEPR
-        %UGripper
+        PrevSpot
     end
     
     %Methods left: ScoSimQuitTeachCallback,
     % ScorSimTeaches
     
     methods(Access = 'public')
-        function obj = ScorSimBot
+        function obj = ScorBotSim
             obj.Simulation = ScorSimInit;
             ScorSimPatch(obj.Simulation);
             obj.Siminitialize;
@@ -28,7 +27,7 @@ classdef ScorSimBot < matlab.mixin.SetGet
         
         function delete(obj)
             delete(obj);
-            clear all;
+            clear obj;
         end
         
         function Siminitialize(obj)
@@ -49,18 +48,10 @@ classdef ScorSimBot < matlab.mixin.SetGet
             ScorSimTeachXYZPR(obj.Simulation);
         end
         
-        function TeachCallback
-            ScorSimTeachCallback(obj.Simulation);
-        end
-        
-        function QuitTeachCallback
-            ScorSimQuitTeachCallback(obj.Simulation);
-        end
-        
         function Undo(obj)
-            temp = getBSEPR(obj);
-            setBSEPR(obj, obj.UBSEPR);
-            obj.UBSEPR = temp;
+            temp = obj.BSEPR;
+            setBSEPR(obj, obj.PrevSpot);
+            obj.PrevSpot = temp;
         end
     end
     
@@ -86,44 +77,53 @@ classdef ScorSimBot < matlab.mixin.SetGet
 %         end
         
         function setBSEPR(obj, value)
-            obj.UBSEPR = obj.BSEPR;
+            obj.PrevSpot = obj.BSEPR;
             obj.BSEPR = value;
             ScorSimSetBSEPR(obj.Simulation, value);
         end
         
         function setXYZPR(obj, value)
+            obj.PrevSpot = ScorXYZPR2BSEPR(obj.XYZPR);
             obj.XYZPR = value;
             ScorSimSetXYZPR(obj.Simulation, value);
         end
         
         function setPose(obj, value)
+            obj.PrevSpot = ScorPose2BSEPR(obj.Pose);
             obj.Pose = value;
             ScorSimSetPose(obj.Simulation, value);
         end
         
         function setGripper(obj, value)
-            obj.UGripper = obj.Gripper;
             obj.Gripper = value;
             ScorSimSetGripper(obj.Simulation, value);
         end
         
         function setDeltaBSEPR(obj, value)
             obj.DeltaBSEPR = value;
-            obj.UBSEPR = obj.BSEPR;
+            obj.PrevSpot = obj.BSEPR;
             obj.BSEPR = obj.BSEPR - obj.DeltaBSEPR;
             ScorSimSetBSEPR(obj.Simulation, obj.BSEPR);
+            obj.XYZPR = ScorBSEPR2XYZPR(obj.BSEPR);
+            obj.Pose = ScorBSEPR2Pose(obj.BSEPR);
         end
         
         function setDeltaXYZPR(obj, value)
+            obj.PrevSpot = ScorXYZPR2BSEPR(obj.XYZPR);
             obj.DeltaXYZPR = value;
             obj.XYZPR = obj.XYZPR - obj.DeltaXYZPR;
             ScorSimSetXYZPR(obj.Simulation, obj.XYZPR);
+            obj.BSEPR = ScorXYZPR2BSEPR(obj.XYZPR);
+            obj.Pose = ScorXYZPR2Pose(obj.XYZPR);
         end
         
         function setDeltaPose(obj, value)
+            obj.PrevSpot = ScorPose2BSEPR(obj.Pose);
             obj.DeltaPose = value;
             obj.Pose = obj.Pose - obj.DeltaPose;
             ScorSimSetPose(obj.Simulation, obj.Pose);
+            obj.BSEPR = ScorPose2BSEPR(obj.Pose);
+            obj.XYZPR = ScorPose2XYZPR(obj.Pose);
         end
         
 %         
