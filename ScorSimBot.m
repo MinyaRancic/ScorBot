@@ -49,6 +49,14 @@ classdef ScorSimBot < matlab.mixin.SetGet
             ScorSimTeachXYZPR(obj.Simulation);
         end
         
+        function TeachCallback(obj)
+            ScorSimTeachCallback(obj.Simulation);
+        end
+        
+        function QuitTeachCallback(obj)
+            ScorSimQuitTeachCallback(obj.Simulation);
+        end
+        
         function Undo(obj)
             if (all(obj.BSEPR) == all(obj.UBSEPR) && all(obj.Gripper) ~= all(obj.UGripper))
                 temp = obj.Gripper;
