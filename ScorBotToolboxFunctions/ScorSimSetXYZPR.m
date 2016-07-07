@@ -17,6 +17,9 @@ function confirm = ScorSimSetXYZPR(varargin)
 %   30Dec2015 - Updated error checking
 %   30Dec2015 - Updated to add "confirm" output
 
+%% Set global for ScorSimSetUndo
+global ScorSimSetUndoBSEPR
+
 %% Check inputs
 % Check for zero inputs
 if nargin < 1
@@ -80,6 +83,9 @@ else
     % Elbow-up
     ElbowStr = 'ElbowUpSolution';
 end
+
+%% Set the ScorSimSetUndo waypoint
+ScorSimSetUndoBSEPR = ScorSimGetBSEPR;
 
 %% Move simulation
 BSEPR = ScorXYZPR2BSEPR(XYZPR,ElbowStr);

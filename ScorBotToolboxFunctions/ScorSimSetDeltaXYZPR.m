@@ -17,6 +17,9 @@ function confirm = ScorSimSetDeltaXYZPR(varargin)
 %   30Dec2015 - Updated error checking
 %   30Dec2015 - Updated to add "confirm" output
 
+%% Set global variable for ScorSimSetUndo
+global ScorSimSetUndoBSEPR
+
 %% Check inputs
 % Check for zero inputs
 if nargin < 1
@@ -69,6 +72,9 @@ end
 if nargin > 2
     warning('Too many inputs specified. Ignoring additional parameters.');
 end
+
+%% Set ScorSimSetUndo waypoint
+ScorSimSetUndoBSEPR = ScorSimGetBSEPR;
 
 %% Move simulation
 XYZPR = ScorSimGetXYZPR(scorSim);

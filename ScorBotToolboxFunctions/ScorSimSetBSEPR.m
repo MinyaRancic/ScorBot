@@ -15,6 +15,10 @@ function confirm = ScorSimSetBSEPR(varargin)
 %   30Dec2015 - Updated error checking
 %   30Dec2015 - Updated to add "confirm" output
 
+%% Set global for ScorSimSetUndo
+
+global ScorSimSetUndoBSEPR
+
 %% Check inputs
 % Check for zero inputs
 if nargin < 1
@@ -67,6 +71,10 @@ end
 if nargin > 2
     warning('Too many inputs specified. Ignoring additional parameters.');
 end
+
+%% Set the ScorSimSetUndo waypoint
+
+ScorSimSetUndoBSEPR = ScorSimGetBSEPR;
 
 %% Move simulation
 for i = 1:numel(scorSim.Joints)
