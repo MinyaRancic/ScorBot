@@ -11,7 +11,8 @@ classdef ScorBot < hgsetget
         Control
         IsMoving
         PendantMode
-
+        IsReady
+        GripperOffset
     end
     
     methods(Access = 'public')
@@ -71,6 +72,13 @@ classdef ScorBot < hgsetget
             PendantMode = ScorGetPendantMode;
         end
         
+        function IsReady = get.IsReady(obj)
+            IsReady = ScorIsReady;
+        end
+        
+        function GripperOffset = get.GripperOffset(obj)
+            GripperOffset = scorGetGripperOffset;
+        end
         %% all the setter methods
 
         function obj = set.BSEPR(obj, value)
@@ -177,5 +185,12 @@ classdef ScorBot < hgsetget
         end
         
 
+        function setPoint(varargin)
+            ScorSetPoint(varargin)
+        end
+        
+        function gotoPoint(varargin)
+            ScorGoroPoint(varargin)
+        end
     end
 end

@@ -11,7 +11,7 @@ classdef ScorBot < hgsetget
         Control
         IsMoving
         PendantMode
-
+        IsReady
     end
     
     methods(Access = 'public')
@@ -176,8 +176,13 @@ classdef ScorBot < hgsetget
             ScorCreateVector(vName, n);
         end
         
-        function setPoint(
-=======
->>>>>>> origin/master
+
+        function setPoint(varargin)
+            ScorSetPoint(varargin)
+        end
+        
+        function gotoPoint(varargin)
+            ScorGoroPoint(varargin)
+        end
     end
 end
