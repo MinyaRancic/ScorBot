@@ -1,25 +1,20 @@
 %classdef ScorBot < matlab.mixin.SetGet
 classdef ScorBot < hgsetget
     properties(GetAccess = 'public', SetAccess = 'public')
-        %% ScorBot Propertie Definitions
         MoveTime
         MoveType
         BSEPR       %Joint angles
-        dBSEPR
-        prevBSEPR
         XYZPR       %Task Space
-        dXYZPR
         Pose        %Task Space (SE3)
-        dPose
         Gripper
         Speed
         Control
         IsMoving
         PendantMode
+
     end
     
     methods(Access = 'public')
-        %% constructor, destructor, and initialize
         function obj = ScorBot
             ScorInit;
             ScorHome;
@@ -32,8 +27,8 @@ classdef ScorBot < hgsetget
         end
         
         function initialize(obj)
-            obj.MoveType = 'LinearJoint';
             obj.MoveTime = ScorGetMoveTime;
+            obj.MoveType = 'LinearJoint';
             obj.BSEPR = ScorGetBSEPR;
             obj.XYZPR = ScorGetXYZPR;
             obj.Pose = ScorGetPose;
@@ -43,7 +38,6 @@ classdef ScorBot < hgsetget
     end
     
     methods
-        %% all the getter methods
         function BSEPR = get.BSEPR(obj)
             disp('TEST')
             BSEPR = ScorGetBSEPR;
@@ -60,7 +54,7 @@ classdef ScorBot < hgsetget
         function Gripper = get.Gripper(obj)
             Gripper = ScorGetGripper;
         end
-              
+
         function Speed = get.Speed(obj)
             Speed = ScorGetSpeed;
         end
@@ -78,9 +72,9 @@ classdef ScorBot < hgsetget
         end
         
         %% all the setter methods
+
         function obj = set.BSEPR(obj, value)
-            obj.prevBSEPR = ScorGetBSEPR;
-            obj.BSEPR = [value ScorGetBSEPR];
+            obj.BSEPR = value;
             ScorSetBSEPR(value, 'MoveType', obj.MoveType);
         end
         
@@ -182,6 +176,6 @@ classdef ScorBot < hgsetget
             ScorCreateVector(vName, n);
         end
         
-        function setPoint(
+
     end
 end
