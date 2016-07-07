@@ -3,9 +3,13 @@ classdef ScorBot < hgsetget
     properties(GetAccess = 'public', SetAccess = 'public')
         MoveTime
         MoveType
-        BSEPR       %Joint angles
-        XYZPR       %Task Space
-        Pose        %Task Space (SE3)
+        BSEPR %Joint angles
+        dBSEPR
+        prevBSEPR
+        XYZPR %Task Space
+        dXYZPR
+        Pose  %Task Space (SE3)
+        dPose 
         Gripper
         Speed
         Control
