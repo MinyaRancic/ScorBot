@@ -1,16 +1,24 @@
 %classdef ScorBot < matlab.mixin.SetGet
 classdef ScorBot < hgsetget
     properties(GetAccess = 'public', SetAccess = 'public')
+        %% ScorBot Propertie Definitions
         MoveTime
         MoveType
         BSEPR       %Joint angles
+        dBSEPR
+        prevBSEPR
         XYZPR       %Task Space
+        dXYZPR
         Pose        %Task Space (SE3)
+        dPose
         Gripper
         Speed
+        Control
+        IsMoving
     end
     
     methods(Access = 'public')
+        %% constructor, destructor, and initialize
         function obj = ScorBot
             ScorInit;
             ScorHome;
@@ -23,17 +31,18 @@ classdef ScorBot < hgsetget
         end
         
         function initialize(obj)
-            MoveTime = ScorGetMoveTime;
-            MoveType = 'LinearJoint';
-            BSEPR = ScorGetBSEPR;
-            XYZPR = ScorGetXYZPR;
-            Pose = ScorGetPose;
-            Gripper = ScorGetGripper;
-            Speed = ScorGetSpeed;
+            obj.MoveType = 'LinearJoint';
+            obj.MoveTime = ScorGetMoveTime;
+            obj.BSEPR = ScorGetBSEPR;
+            obj.XYZPR = ScorGetXYZPR;
+            obj.Pose = ScorGetPose;
+            obj.Gripper = ScorGetGripper;
+            obj.Speed = ScorGetSpeed;
         end
     end
     
     methods
+        %% all the getter methods
         function BSEPR = get.BSEPR(obj)
             disp('TEST')
             BSEPR = ScorGetBSEPR;
@@ -51,12 +60,18 @@ classdef ScorBot < hgsetget
             Gripper = ScorGetGripper;
         end
         
+        
         function Speed = get.Speed(obj)
             Speed = ScorGetSpeed;
         end
         
+        function IsMoving = get.IsMoving(obj)
+            IsMoving = ScorIsMoving;
+        end
+        %% all the setter methods
         function obj = set.BSEPR(obj, value)
-            obj.BSEPR = value;
+            obj.prevBSEPR = ScorGetBSEPR;
+            obj.BSEPR = [value ScorGetBSEPR];
             ScorSetBSEPR(value, 'MoveType', obj.MoveType);
         end
         
@@ -94,6 +109,34 @@ classdef ScorBot < hgsetget
                 otherwise
                     error('Move Type must be LinearTask or LinearJoint');   
             end
+        end
+        
+        function obj = set.dBSEPR(obj, value)
+            ScorSetDeltaBSEPR(value);
+            obj.dBSEPR = value;
+            obj.BSEPR = ScorGetBSEPR;    
+        end
+        
+        function obj = set.dXYZPR(obj, value)
+            ScorSetDeltaXYZPR(value);
+            obj.dXYZPR = value;
+            obj.XYZPR = ScorGetXYZPR;    
+        end
+        
+        function obj = set.dPose(obj, value)
+            ScorSetDeltaPose(value);
+            obj.dPose = value;
+            obj.Pose = ScorGetPose;    
+        end
+            %% action commands
+        function goHome(obj)
+            ScorGoHome;
+        end
+        
+        function undo(obj)
+            ScorSetBSEPR(obj.prevBSEPR);
+            obj.prevBSEPR = obj.BSEPR;
+            obj.BSEPR = ScorGetBSEPR;
         end
         
     end
