@@ -5,7 +5,7 @@ classdef ScorBot < hgsetget
         MoveType
         BSEPR %Joint angles
         dBSEPR
-        prevBSEPR
+%         prevBSEPR
         XYZPR %Task Space
         dXYZPR
         Pose  %Task Space (SE3)
@@ -19,6 +19,9 @@ classdef ScorBot < hgsetget
         GripperOffset
     end
     
+    properties(GetAccess = 'public', SetAccess = 'private')
+        prevBSEPR
+    end
     methods(Access = 'public')
         function obj = ScorBot
             ScorInit;
@@ -195,6 +198,14 @@ classdef ScorBot < hgsetget
         
         function gotoPoint(varargin)
             ScorGoroPoint(varargin)
+        end
+        
+        function sendBSEPR(udpS, BSEPR)
+            ScorSendBSEPR(udpS, BSEPR);
+        end
+        
+        function recieveBSEPR(udpR, BSEPR)
+            ScorRecieveBSEPR(udpR, BSEPR);
         end
     end
 end
