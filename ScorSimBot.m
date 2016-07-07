@@ -13,7 +13,7 @@ classdef ScorSimBot < matlab.mixin.SetGet
         DeltaXYZPR
         DeltaPose
         UBSEPR
-        UGripper
+        %UGripper
     end
     
     %Methods left: ScoSimQuitTeachCallback,
@@ -28,7 +28,7 @@ classdef ScorSimBot < matlab.mixin.SetGet
         
         function delete(obj)
             delete(obj);
-            clear;
+            clear all;
         end
         
         function Siminitialize(obj)
@@ -49,11 +49,11 @@ classdef ScorSimBot < matlab.mixin.SetGet
             ScorSimTeachXYZPR(obj.Simulation);
         end
         
-        function TeachCallback(obj)
+        function TeachCallback
             ScorSimTeachCallback(obj.Simulation);
         end
         
-        function QuitTeachCallback(obj)
+        function QuitTeachCallback
             ScorSimQuitTeachCallback(obj.Simulation);
         end
         
