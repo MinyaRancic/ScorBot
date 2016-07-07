@@ -28,7 +28,6 @@ classdef ScorSimBot < matlab.mixin.SetGet
         
         function delete(obj)
             delete(obj);
-            clear;
         end
         
         function Siminitialize(obj)
@@ -54,11 +53,12 @@ classdef ScorSimBot < matlab.mixin.SetGet
                 temp = obj.Gripper;
                 set.Gripper(obj, obj.UGripper);
                 obj.UGripper = temp;
-            end
-            if (all(obj.BSEPR) ~= all(obj.UBSEPR) && all(obj.Gripper) == all(obj.UGRipper))
+            elseif (all(obj.BSEPR) ~= all(obj.UBSEPR) && all(obj.Gripper) == all(obj.UGRipper))
                 temp = obj.BSEPR;
                 set.BSEPR(obj, obj.UBSEPR);
-                obj.UBSEPR = temp;                
+                obj.UBSEPR = temp;
+            else
+                temp = 1;
             end
         end
     end
