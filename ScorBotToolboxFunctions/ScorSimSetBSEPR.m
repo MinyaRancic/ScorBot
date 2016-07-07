@@ -74,7 +74,7 @@ end
 
 %% Set the ScorSimSetUndo waypoint
 
-ScorSimSetUndoBSEPR = ScorSimGetBSEPR;
+ScorSimSetUndoBSEPR = ScorSimGetBSEPR(scorSim);
 
 %% Move simulation
 for i = 1:numel(scorSim.Joints)
