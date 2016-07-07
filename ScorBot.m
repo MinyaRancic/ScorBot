@@ -201,11 +201,29 @@ classdef ScorBot < hgsetget
         end
         
         function sendBSEPR(udpS, BSEPR)
-            ScorSendBSEPR(udpS, BSEPR);
+            ScorSendBSEPR(udpS);
         end
         
         function recieveBSEPR(udpR, BSEPR)
-            ScorRecieveBSEPR(udpR, BSEPR);
+            obj.BSEPR = ScorRecieveBSEPR(udpR, BSEPR);
+        end
+        
+        
+        function sendXYZPR(udpS, XYZPR)
+            ScorSendXYZPR(udpS, ScorGetXYZPR);
+        end
+        
+        function recieveXYZPR(udpR, XYZPR)
+            obj.XYZPR = ScorRecieveXYZPR(udpR);
+        end
+        
+        
+        function sendPose(udpS, Pose)
+            ScorSendPose(udpS, ScorGetPose);
+        end
+        
+        function recievePose(udpR, Pose)
+            obj.Pose = ScorRecievePose(udpR);
         end
     end
 end

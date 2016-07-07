@@ -1,13 +1,16 @@
-function ScorSendXYZPR( udpS, XYZPR )
-% SCORSENDXYZPR sends the current XYZPR or a specified XYZPR value
-%   ScorSendXYZPR(udpS) sends the current XYZPR value from ScorBot to the
-%   UDP sender specified in udpS.
+function XYZPR = ScorReceiveXYZPR(udpR)
+% SCORRECEIVEXYZPR receives a XYZPR value from a port designated by a UDP 
+% receiver object
+%   XYZPR = ScorSendXYZPR(udpS) receives a XYZPR value from a port 
+%   designated by a UDP receiver object specified in udpR.
+% 
+%   Note: If no value is received or message contains an invalid vector,
+%   this function will return an empty set.
 %
-%   ScorSendXYZPR(udpS,XYZPR) sends the specified XYZPR value to the UDP
-%   sender specified in udpS.
+% See also ScorInitSender ScorInitReceiver ScorSendXYZPR
 %
-% See also ScorInitSender ScorInitReceiver ScorReceiveXYZPR
-%
+% M. Kutzer, 12Apr2016, USNA
+
 %% Check UDP Receiver
 switch class(udpR)
     case 'dsp.UDPReceiver'
@@ -31,6 +34,3 @@ XYZPR = str2num(msg_Rsvd);
 if ~isnumeric(XYZPR) || numel(XYZPR) ~= 5
     XYZPR = []; % return an empty set
 end
-
-end
-
