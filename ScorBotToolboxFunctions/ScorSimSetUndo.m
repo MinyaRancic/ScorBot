@@ -1,4 +1,4 @@
-function confirm = ScorSimSetUndo
+function confirm = ScorSimSetUndo(scorSim)
 % SCORSIMSETUNDO returns ScorBotSim to the previously set waypoint
 % 
 %   See also: ScorSimSetBSEPR ScorSimSetXYZPR ScorSimSetPose ScorSimSetDeltaBSEPR
@@ -13,4 +13,4 @@ if isempty(ScorSimSetUndoBSEPR)
     return
 end
 
-confirm = ScorSimSetBSEPR(ScorSimSetUndoBSEPR);
+confirm = ScorSimSetBSEPR(scorSim.Simulation, ScorSimSetUndoBSEPR);
