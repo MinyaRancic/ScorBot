@@ -1,16 +1,15 @@
-%% ScorBotSim class, able to run all Scorbot simulation functions.
+%% ScorBotSim class, runs all Scorbot simulation functions
+% D Saiontz, M Rancic, 8July2016
+
 
 classdef ScorBotSim < matlab.mixin.SetGet %%For matlab version 2014b and greater
-    
     %classdef ScorBotSim < hgsetget For matlab version 2014a and before
     %% Declaration of properties of ScorBotSim
-    % Uses DeltaBSEPR, DeltaXYZPR, and DeltaPose as dummy variables to be able
-    % to run ScorSimSetDeltaBSEPR, ScorSimSetDeltaXYZPR, and
+    % Uses DeltaBSEPR, DeltaXYZPR, and DeltaPose as dummy variables to be
+    % able to run ScorSimSetDeltaBSEPR, ScorSimSetDeltaXYZPR, and
     % ScorSimSetDeltaPose
     
     properties(GetAccess = 'public', SetAccess = 'public')
-        %MoveTime
-        %MoveType
         BSEPR       %Joint angles
         XYZPR       %Task Space
         Pose        %Task Space (SE3)
