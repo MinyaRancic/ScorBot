@@ -2,7 +2,7 @@
 % D Saiontz, M Rancic, 8July2016
 
 
-classdef ScorBotSim < matlab.mixin.SetGet %%For matlab version 2014b and greater
+classdef ScorBotSim < matlab.mixin.SetGet %%For matlab version 2014b and later
     %classdef ScorBotSim < hgsetget For matlab version 2014a and before
     %% Declaration of properties of ScorBotSim
     % Uses DeltaBSEPR, DeltaXYZPR, and DeltaPose as dummy variables to be
