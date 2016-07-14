@@ -2,51 +2,37 @@ classdef ScorBot6Axis < matlab.mixin.SetGet
     %ScorBot6Axis Summary of this class goes here
     %   Detailed explanation goes here
     
+    
     properties
-        BSEPR
-        XYZPR
-        Pose
-        Simulation
-        Gripper
-        PrevSpot
-        COM
     end
 
     methods (Access = 'public')
         function obj = ScorBot6Axis(COM)
-            obj.COM = COM;
-            Scor6AxisSim(obj);
         end
         
-        function delete(obj)
-            delete(obj);
-            clear;
+        function ser = Scor6AxisCreateSerial(COM)
+            ser = Scor6AxisInit(COM);
         end
         
-        function read(COM)
-            out = fscanf(COM,'!T%fP%f,%f,%f,%f,%f,%fV%f,%f,%f,%f,%f,%fS%d,%d,%d,%d,%d,%d',[1,190]);
-            T = out(1); % Time stamp
-            P = out(2:7); % Axis positions
-            V = out(8:13); % Axis velocities
-            S = out(14:19); % Axis states
+        function Scor6AxisCreateSim(COM)
+            Scor6AxisSim(COM);
         end
     end
     
     methods
-        function getBSEPR(obj)
-            ScorSimGetBSEPR(obj);
+        function Scor6AxisSetPosition(ser, dt, values)
+            Scor6AxisWritePosition(ser, dt, values);
         end
         
-        function getXYZPR(obj)
-            ScorSimGetXYZPR(obj);
+        function Scor6AxisSetVelocity(ser, dt, values)
+            Scor6AxisWriteVelocity(ser, dt, values);
         end
         
-        function getGripper(obj)
-            ScorSimGetGripper(obj);
-        end
-        
-        function getPose(obj)
-            ScorSimGetPose(obj)
+        function Scor6AxisGetInfo(ser)
+            info.Time = Scor6AxisGetRecentTime(ser);
+            info.Position = Scor6AxisGetRecentPosition(ser);
+            info.Velocity = Scor6AxisGetRecentVelocity(ser);
+            info.State = Scor6AxisGetRecentState(ser);
         end
     end
 end

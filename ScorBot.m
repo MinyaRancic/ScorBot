@@ -1,5 +1,5 @@
 %% ScorBot Class, runs all ScorBot functions
-% M Rancic, 8July2016
+% M. Rancic, M. Kutzer, 8July2016, USNA
 
 %classdef ScorBot < matlab.mixin.SetGet For matlab 2014b and later
 classdef ScorBot < hgsetget % For matlab 2014a and earlier

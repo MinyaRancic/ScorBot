@@ -1,5 +1,5 @@
 %% ScorBotSim class, runs all Scorbot simulation functions
-% D Saiontz, M Rancic, 8July2016
+% D. Saiontz, M. Rancic, M. Kutzer, 8July2016, USNA
 
 
 classdef ScorBotSim < matlab.mixin.SetGet %%For matlab version 2014b and later

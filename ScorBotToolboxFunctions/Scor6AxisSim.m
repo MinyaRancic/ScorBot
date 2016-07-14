@@ -11,16 +11,19 @@ function Scor6AxisSim(COM)
 
 %% Set simulation struct as global for callback
 global sim
+
 %% Set callback parameters as global for simulated data
-global isPos pos isVel vel dt moveArm
-%% Initialize callback parameters
-isPos = false;
-pos = [];
-isVel = false; 
-vel = [];
-dt = 0;
+global ppPos ppVel dt t_start t_final moveArm isPos pos isVel vel
 moveArm = false;
-idx = 0;
+isPos = false;
+isVel = false;
+pos = [];
+vel = [];
+
+dt = 0;
+t_start = 0;
+t_final = 0;
+t_arm = 0;
 
 %% Check inputs
 narginchk(1,1);
@@ -57,40 +60,33 @@ sim = ScorSimInit;
 ScorSimPatch(sim);
 
 %% Initialize start time
+% Initialize timer
 t0 = tic;
-BSEPR = ScorSimGetBSEPR(sim);
-G = ScorSimGetGripper(sim);
-T = toc(t0);
-tBSEPRG = [T,BSEPR,G];
-
+% Get initial configuration
+pBSEPRG = [ScorSimGetBSEPR(sim), ScorSimGetGripper(sim)];
+vBSEPRG = zeros(1,6);
 while true
-    try 
-        % Get current joint configuration
-        drawnow
-        BSEPR = ScorSimGetBSEPR(sim);
-        G = ScorSimGetGripper(sim);
+    %try 
         % Get current time
         T = toc(t0);
-        % Save current time-stamped joint position
-        tBSEPRG(2,:) = [T,BSEPR,G];
         % Prepare data for sending
         % P - Axis position (radians)
-        P = tBSEPRG(2,2:end);
+        P = pBSEPRG;
         % V - Axis velocity (radians/second)
-        V = diff(tBSEPRG(:,2:end),1)./diff(tBSEPRG(:,1),1);
+        V = vBSEPRG;
         % S - Axis state
         % This is currently being treated as encoder "Steps" but it will be
         % replace by axis *state* which will be represented using a signed
         % integer.
-        S = [ScorBSEPR2Cnts(BSEPR),0]; % Note we do not know the gripper steps yet
+        S = [ScorBSEPR2Cnts(pBSEPRG(1:5)),0]; % Note we do not know the gripper steps yet
         % Send data
         % $T_P____V____S____\n
         
         % Create message
         msg = sprintf([...
-            '$T%.2f,',...
-            'P%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,',...
-            'V%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,',...
+            '$T%.2f',...
+            'P%.4f,%.4f,%.4f,%.4f,%.4f,%.4f',...
+            'V%.4f,%.4f,%.4f,%.4f,%.4f,%.4f',...
             'S%d,%d,%d,%d,%d,%d\n'],T,P,V,S);
         
         % Wait for serial to become idle before sending
@@ -101,37 +97,36 @@ while true
             end
         end
         % Display message to command window
-        fprintf('%s',msg); 
+        %fprintf('%s',msg); 
         % Send message over serial
         fprintf(s,'%s',msg,'async');
         
-        % Update tBSEPRG array
-        tBSEPRG(1,:) = tBSEPRG(2,:);
-        
         % Animate movement (this is imperfect and will be "jerky")
-        % TODO - Complete movement estimation
-        %{
         if moveArm
-            if isPos
-                
-                % Position Movement
-                % Update joint configuration
-                ScorSimSetBSEPR(sim,pos(i,1:5)); % <-- need to deal with "i"
-                
-                %
-                ScorSimSetGripper(sim,pos(i,6));
+            if t_arm == 0
+                tt0 = tic;
             end
-            if isVel
-                % Velocity Movement
+            t_arm = toc(tt0);
+            if t_final >= t_arm
+                for i = 1:6
+                    pBSEPRG(i) = ppval(ppPos{i},t_arm);
+                    vBSEPRG(i) = ppval(ppVel{i},t_arm);
+                end
+                ScorSimSetBSEPR(sim,pBSEPRG(1:5));
+                ScorSimSetGripper(sim,wrapGrip(pBSEPRG(6)));
+                drawnow
+            else
+                t_arm = 0;
+                moveArm = false;
+                vBSEPRG = zeros(6,1);
             end
-            for i = 1:size(pos,1)
-        %}
-    catch
-        fprintf(2,'Something happened?!\n');
-        fclose(s);
-        delete(s);
-        break
-    end
+        end
+    %catch
+    %    fprintf(2,'Something happened?!\n');
+    %    fclose(s);
+    %    delete(s);
+    %    break
+    %end
 end
 
 end
@@ -172,12 +167,13 @@ function scorSerReadCallback(obj,event)
 % Set simulation struct as global for callback
 global sim
 % Set callback parameters as global for simulated data
-global isPos pos isVel vel dt moveArm
+global ppPos ppVel dt t_start t_final moveArm isPos pos isVel vel
 
+%try
 switch event.Type
     case 'BytesAvailable'
         out = fscanf(obj,'%s'); % read data coming in as a string
-        if numel(out) >= 9
+        if numel(out) >= 10
             switch out(1:9)
                 case '!PosCMDdt'
                     % Position command started
@@ -195,49 +191,106 @@ switch event.Type
                     fprintf('\t"%s" | dt=%.2f\n',out,dt);
                 otherwise
                     % Assume the received message is data
-                    [arr,cnt,err,~] = sscanf(out,'%d,%f,%f,%f,%f,%f,%f',[1,8]);
+                    [arr,cnt,err,~] = sscanf(out,'%d,%f,%f,%f,%f,%f,%f',[1,7]);
                     if cnt == 7 && isempty(err)
                         % Successfully parsed data
                         if isPos
                             % Append position data
                             pos = [pos; arr];
+                            % Print received data to command window
                             fprintf('POS:%d,%f,%f,%f,%f,%f,%f\n',arr);
                         end
                         if isVel
                             % Append velocity data
                             vel = [vel; arr];
+                            % Print received data to command window
                             fprintf('VEL:%d,%f,%f,%f,%f,%f,%f\n',arr);
                         end
                     else
                         beep
-                        fprintf(2,'Unexpected data format')
+                        fprintf(2,'Unexpected data format\n')
                     end
             end
         else
             switch out
                 case '**'
                     % End of transmission
-                    % TODO - Complete movement estimation
-                    %{
-                    moveArm = true;
+                    fprintf('TRM:%s\n',out);
+                    % Process position trajectory
                     if isPos
                         % Define time
-                        t = dt*pos(:,1); % Define time
-                        t = [0; t]; % Accound for zero
+                        t = dt*pos(:,1); % Define time using index and dt
+                        t = [0; t];      % Account for zero time
                         % Define configurations
-                        BSEPRG = ScorSimGetBSEPR(sim);
-                        BSEPRG(6) = ScorSimGetGripper(sim);
-                        BSEPRG = [BSEPRG; pos(:,2:end)];
-                    %}
-                    fprintf('TRM:%s\n',out);
+                        BSEPRG = ScorSimGetBSEPR(sim);      % joint configuration at time 0
+                        BSEPRG(6) = ScorSimGetGripper(sim); % gripper configuration at time 0
+                        BSEPRG = [BSEPRG; pos(:,2:end)];    % append trajectory
+                        % Fit piecewise polynomial
+                        conds = [0,0]; % Constrain first derivative
+                        x = t';
+                        %size(x)
+                        for i = 1:6
+                            y = [0; BSEPRG(:,i); 0]'; % Add end-constraints
+                            %size(y)
+                            ppPos{i} = csape(x,y,conds); % Position
+                            ppVel{i} = dspline(ppPos{i});  % Velocity
+                        end
+                        % Define start and end times 
+                        t_start = t(1);
+                        t_final = t(end);
+                        % Update profile flags
+                        isPos = false;
+                        isVel = false;
+                        % Empty profile data
+                        pos = [];
+                        vel = [];
+                        % Flag move
+                        moveArm = true;
+                    end
+                    % Process velocity trajectory
+                    if isVel
+                        % Define time
+                        t = dt*vel(:,1); % Define time using index and dt
+                        t = [0; t];      % Accound for zero time
+                        % Get starting configuration
+                        BSEPRG0 = ScorSimGetBSEPR(sim);      % joint configuration at time 0
+                        BSEPRG0(6) = ScorSimGetGripper(sim); % gripper configuration at time 0
+                        % Define velocities
+                        BSEPRG = zeros(1,6);    % Assume start at 0 velocity
+                        BSEPRG = [BSEPRG; vel(:,2:end)];
+                        % Fit piecewise polynomial
+                        conds = [0,0]; % Constrain first derivative
+                        x = t';
+                        %size(x)
+                        for i = 1:6
+                            y = [0; BSEPRG(:,i); 0]'; % Add end-constraints
+                            %size(y)
+                            ppVel{i} = csape(x,y,conds); % Position
+                            ppPos{i} = ispline(ppVel{i},BSEPRG0(i));  % Velocity
+                        end
+                        % Define start and end times 
+                        t_start = t(1);
+                        t_final = t(end);
+                        % Update flags
+                        isPos = false;
+                        isVel = false;
+                        % Empty profile data
+                        pos = [];
+                        vel = [];
+                        % Flag move
+                        moveArm = true;
+                    end
                 otherwise
                     beep
-                    fprintf(2,'Unexpected data format')
+                    fprintf(2,'Unexpected data format\n')
             end
         end
     otherwise
         error('Unexpected event.');
 end
+%catch ME
+%    disp(ME)
+%end
 
 end
 
