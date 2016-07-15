@@ -4,18 +4,24 @@ classdef ScorBot6Axis < matlab.mixin.SetGet
     
     
     properties
+        SimSerial
+        RWSerial
     end
 
     methods (Access = 'public')
-        function obj = ScorBot6Axis(COM)
+        function obj = ScorBot6Axis(COM1, COM2)
+            obj.SimSerial = COM1;
+            obj.RWSerial = COM2;
         end
         
-        function ser = Scor6AxisCreateSerial(COM)
-            ser = Scor6AxisInit(COM);
+        function ser = Scor6AxisCreateSerial(obj)
+            ser = Scor6AxisInit(obj.RWSerial);
         end
         
-        function Scor6AxisCreateSim(COM)
-            Scor6AxisSim(COM);
+        function Scor6AxisCreateSim(obj)
+            global COM;
+            COM = obj.SimSerial;
+            !matlab -r eval('assignin('base', 'COM', obj.SimSerial); Scor6AxisSim(COM);') &
         end
     end
     
