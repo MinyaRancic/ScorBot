@@ -15,9 +15,6 @@ function installScor6AxisToolbox(replaceExisting)
 
 % Updates
 
-% TODO - Allow users to create a local version if admin rights are not
-% possible.
-
 %% Install/Update required toolboxes
 ToolboxUpdate('Transformation');
 ToolboxUpdate('Plotting');
