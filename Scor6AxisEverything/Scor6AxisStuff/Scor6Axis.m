@@ -81,11 +81,8 @@ classdef Scor6Axis < matlab.mixin.SetGet
         end
         
         % Most recent data points are put into a struct
-        function info = Scor6AxisGetInfo(obj)
-            info.Time = Scor6AxisGetRecentTime(obj.ser);
-            info.Position = Scor6AxisGetRecentPosition(obj.ser);
-            info.Velocity = Scor6AxisGetRecentVelocity(obj.ser);
-            info.State = Scor6AxisGetRecentState(obj.ser);
+        function info = Scor6AxisInfo(obj)
+            info = Scor6AxisGetInfo(obj.ser);
         end
     end
 end
